@@ -14,11 +14,34 @@ module CodeWars
     # Models seeded through YML files
     SEEDED_MODELS = %w(Event Decision)
 
+    def initialize
+      seed
+      define_models_getters
+    end
+
+    # Sets up models getters dynamically (#events, #decisions)
+    def define_models_getters
+      self.class::SEEDED_MODELS.each do |seed_model|
+        seed_model_name = seed_model.underscore.pluralize.to_sym
+        define_singleton_method(seed_model_name) do
+          @data[seed_model_name]
+        end
+      end
+    end
+
     # Configure database
     # def configure(database_file_name="code_wars.db")
     #   # Open a database
     #   @db = SQLite3::Database.new "./#{database_file_name}.db"
     # end
+
+    # Represents the current player instance
+    # @return Player
+    def current_player
+      @player ||= Player.new
+    end
+
+    private
 
     # Loads data yml files in memory in data array attribute
     # @return [CodeWarsModel]
@@ -47,13 +70,6 @@ module CodeWars
           @data[pluralized_model_name.to_sym] << model
         end
       end
-    end
-
-
-    # Represents the current player instance
-    # @return Player
-    def current_player
-      @player ||= Player.new
     end
   end
 end

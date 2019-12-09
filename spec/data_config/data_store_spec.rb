@@ -1,7 +1,7 @@
-RSpec.describe 'DataStore' do           #
-  context 'before configuration' do  # (almost) plain English
-    it 'has seeded models set' do   #
-      expect(CodeWars::DataStore::SEEDED_MODELS).to eq(%w(Event Decision))  # test code
+RSpec.describe 'DataStore' do
+  context 'before configuration' do
+    it 'has seeded models set' do
+      expect(CodeWars::DataStore::SEEDED_MODELS).to eq(%w(Event Decision))
     end
   end
 

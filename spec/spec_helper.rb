@@ -15,6 +15,7 @@
 # See http://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration
 require 'require_all'
 require_relative '../lib/launcher'
+
 RSpec.configure do |config|
   # rspec-expectations config goes here. You can use an alternate
   # assertion/expectation library such as wrong or the stdlib/minitest
@@ -29,9 +30,9 @@ RSpec.configure do |config|
     #     # => "be bigger than 2"
     expectations.include_chain_clauses_in_custom_matcher_descriptions = true
 
-    # Dir.glob('../app/**', &method(:require_relative))
-    # require_relative "../app/config/data_store.rb"
+  end
 
+  config.before(:all) do
     # # Make sure to require all ruby files
     CodeWars::Launcher::DIRS_TO_LOAD.each do |directory|
       Dir["app/#{directory}/*.rb"].each {|file| require_relative "../#{file}" }

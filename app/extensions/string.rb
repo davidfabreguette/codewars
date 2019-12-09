@@ -6,4 +6,7 @@ class String
     tr("-", "_").
     downcase
   end
+  def pluralize
+    "#{self}s" # simply adds an "s" at the end for now !
+  end
 end

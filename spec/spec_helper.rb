@@ -14,6 +14,7 @@
 #
 # See http://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration
 require 'require_all'
+require_relative "./helpers/launcher_helpers.rb"
 require_relative '../lib/launcher'
 
 RSpec.configure do |config|
@@ -31,6 +32,8 @@ RSpec.configure do |config|
     expectations.include_chain_clauses_in_custom_matcher_descriptions = true
 
   end
+
+  config.include LauncherHelpers
 
   config.before(:all) do
     # # Make sure to require all ruby files

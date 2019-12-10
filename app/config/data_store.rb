@@ -29,25 +29,6 @@ module CodeWars
       end
     end
 
-    # Finds any code wars model in the data Store
-    # @return [CodeWarsModel]
-    def find_in_store(code_wars_instance)
-      CodeWars::DataStore
-        .instance
-        .data[code_wars_instance.data_store_name]
-        .select{|m|
-          m.id == code_wars_instance.id
-        }.first
-    end
-
-    # Updates any given code wars instance in the data Store
-    def update_in_store(code_wars_instance)
-      model_instance = find_in_store(code_wars_instance)
-      CodeWars::DataStore
-        .instance
-        .data[code_wars_instance.data_store_name][model_instance.indexed_at] = code_wars_instance
-    end
-
     private
 
     # Loads data yml files in memory in data array attribute

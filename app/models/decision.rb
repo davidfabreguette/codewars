@@ -21,6 +21,10 @@ module CodeWars
     # Stores the time at which the decision was made by player
     attr_accessor :made_at
 
+    # This methods updates #current_player_input_attribute player attribute
+    # with given
+    # @param [String] player_input
+    # @return [Player]
     def update_player(player_input)
       if CodeWars::Player.instance.respond_to? current_player_input_attribute
         CodeWars::Player.instance.update({
@@ -29,8 +33,10 @@ module CodeWars
       end
     end
 
+    # @return [Event] next event saved in store
     def next_event
-      CodeWars::DataStore.instance.events.select{|e| e.slug == self.next_event_slug}.first
+      CodeWars::DataStore.instance.events
+        .select{|e| e.slug == self.next_event_slug}.first
     end
 
   end

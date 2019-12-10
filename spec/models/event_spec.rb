@@ -96,6 +96,16 @@ RSpec.describe 'Event' do
     end
   end
 
+  describe "#static_next_event" do
+    context "As a E1 event" do
+      it "returns E5 event" do
+        next_event = CodeWars::DataStore.instance.events
+          .select{|e| e.slug == "E5"}.first
+        expect(e1_event.static_next_event).to eq(next_event)
+      end
+    end
+  end
+
   describe "#resolve_next_event" do
     let(:e0_event) {
       e0_event = CodeWars::DataStore.instance.events

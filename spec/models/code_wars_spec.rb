@@ -22,4 +22,8 @@ RSpec.describe 'CodeWarsModel' do
       end
     end
   end
+
+  describe "#custom_label" do
+    # This is tested with Event and Decision Models
+  end
 end

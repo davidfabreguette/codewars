@@ -52,7 +52,7 @@ module CodeWars
       CodeWars::DataStore.instance.data[:events][self.indexed_at + 1]
     end
 
-    # Returns the static next event
+    # Returns the next event saved in store through #next_event_slug
     # based on #next_event_slug attribute
     # @return [Event]
     def static_next_event

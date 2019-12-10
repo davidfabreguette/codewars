@@ -38,7 +38,7 @@ module CodeWars
     end
 
 
-    # FIXME : Move this to an included shared class !
+    # FIXME : Move this to an included shared "conern" class !
     # Make any "label field" customized with Player's name
     # based on meta field "#me#"
     def custom_label

@@ -1,5 +1,5 @@
 require 'yaml'
-require 'awesome_print'
+require 'colorize'
 require 'rdoc'
 require 'rspec'
 require 'require_all'
@@ -26,12 +26,6 @@ module CodeWars
       if @@auto_start_enabled
         start
       end
-      #
-      # ap "Before anything - enter your name :"
-      # current_player = Readline.readline('❞ ', true)
-      #
-      # ap "Hey #{current_player} ! Let's get into this ..."
-
     end
 
     def self.disable_auto_start!
@@ -56,10 +50,15 @@ module CodeWars
     # @return [Event] Next event to be launched on screen
     def launch(event, from_decision=nil)
 
+      end_game_label = "Bye bye Jedi !"
+
       # Shows event label
+      # unless this is a "require all decisions" event and
+      # all decisions have already been chosen !
       unless event.available_decisions.count == 0 and
         event.requires_all_decisions
-        ap event.custom_label
+
+        puts event.custom_label.colorize(:yellow)
       end
 
       # Mark the decision as "made"
@@ -72,25 +71,15 @@ module CodeWars
       selected_decision, input_was_invalid = ask_player_to_make_decision(event)
 
       if !selected_decision and input_was_invalid
-        ap "Bye bye Jedi"
+        puts end_game_label.colorize(:yellow)
         return
       end
-      #
-      # if !event.has_a_player_attribute_decision? and
-      #   player_input and player_input.size > 0 and
-      #   available_decisions.count > 0
-      #
-      #   # Find selected decision
-      #   selected_decision = available_decisions[player_input.to_i - 1]
-      # end
 
       if next_event = event.resolve_next_event(selected_decision)
         launch(next_event, selected_decision)
       else
-        ap "This the end !"
+        puts end_game_label.colorize(:yellow)
       end
-
-      # current_player = Readline.readline('❞ ', true)
     end
 
     private
@@ -133,13 +122,13 @@ module CodeWars
         end
 
         unless event.has_a_player_attribute_decision?
-          ap "--> Press the number of your choice below :"
+          puts "--> Press the number of your choice below :".colorize(:yellow)
         end
 
         max_attempts = 3 # we allow only 3 attempts - the game will stop if no decision is made
         attempts = 0
         while !player_input_is_valid and attempts < max_attempts do
-          player_input = Readline.readline("#{player_name}❞ ", true)
+          player_input = Readline.readline("❞ >", true)
           attempts += 1
           player_input_is_valid = event.is_player_input_valid?(player_input)
 
@@ -170,7 +159,6 @@ module CodeWars
     # Shows display error messages
     # @param [Boolean] has_exceeded_attempts
     # @param [Boolean] is_a_numbered_input
-    # TODO: missing specs
     def display_error_messages(has_exceeded_attempts, is_a_numbered_input)
       if !has_exceeded_attempts
         if is_a_numbered_input

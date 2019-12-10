@@ -1,4 +1,10 @@
 RSpec.describe 'DataStore' do
+
+  let(:e0_event) {
+    e0_event = CodeWars::DataStore.instance.events
+      .select{|e| e.slug == "E0"}.first
+  }
+
   context 'during initialization' do
     it 'has seeded models set' do
       expect(CodeWars::DataStore::SEEDED_MODELS).to eq(%w(Event Decision))
@@ -26,4 +32,17 @@ RSpec.describe 'DataStore' do
     end
   end
 
+  describe "#find_in_store" do
+    it 'finds in store event E0' do
+      expect(CodeWars::DataStore.instance.find_in_store(e0_event))
+    end
+  end
+  
+  describe "#update_in_store" do
+    it 'updates in store event E0' do
+      e0_event.label = "oups...I did it again !"
+      expect(CodeWars::DataStore.instance.find_in_store(e0_event).label)
+        .to eq("oups...I did it again !")
+    end
+  end
 end

@@ -29,16 +29,23 @@ module CodeWars
       end
     end
 
-    # Configure database
-    # def configure(database_file_name="code_wars.db")
-    #   # Open a database
-    #   @db = SQLite3::Database.new "./#{database_file_name}.db"
-    # end
+    # Finds any code wars model in the data Store
+    # @return [CodeWarsModel]
+    def find_in_store(code_wars_instance)
+      CodeWars::DataStore
+        .instance
+        .data[code_wars_instance.data_store_name]
+        .select{|m|
+          m.id == code_wars_instance.id
+        }.first
+    end
 
-    # Represents the current player instance
-    # @return Player
-    def current_player
-      @player ||= Player.new
+    # Updates any given code wars instance in the data Store
+    def update_in_store(code_wars_instance)
+      model_instance = find_in_store(code_wars_instance)
+      CodeWars::DataStore
+        .instance
+        .data[code_wars_instance.data_store_name][model_instance.indexed_at] = code_wars_instance
     end
 
     private
@@ -59,10 +66,12 @@ module CodeWars
         model_klass = Class.const_get("CodeWars::#{model_name}")
 
         # Map models data to new Instances
-        models_data.each do |model_data|
+        models_data.each_with_index do |model_data, i|
           model = model_klass.new
 
           model.load_attributes(model_data||{})
+
+          model.indexed_at = i
 
           # Push to DataStore memory
 

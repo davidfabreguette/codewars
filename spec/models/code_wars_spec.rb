@@ -14,4 +14,12 @@ RSpec.describe 'CodeWarsModel' do
       end
     end
   end
+
+  describe "#data_store_name" do
+    context "As a CodeWarsModel" do
+      it "returns 'code_wars_models'" do
+        expect(CodeWars::CodeWarsModel.new.data_store_name).to eq(:code_wars_models)
+      end
+    end
+  end
 end

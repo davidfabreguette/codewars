@@ -36,5 +36,15 @@ module CodeWars
       # We remove module prefix from the equation
       self.class.to_s.underscore.gsub(/^code_wars\//, "").pluralize.to_sym
     end
+
+
+    # FIXME : Move this to an included shared class !
+    # Make any "label field" customized with Player's name
+    # based on meta field "#me#"
+    def custom_label
+      if respond_to?(:label) and self.label
+        self.label.gsub("#ME#", CodeWars::Player.instance.name || "")
+      end
+    end
   end
 end

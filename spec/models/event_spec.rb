@@ -11,6 +11,10 @@ RSpec.describe 'Event' do
     e1_event = CodeWars::DataStore.instance.events
       .select{|e| e.slug == "E1"}.first
   }
+  let(:e03_event) {
+    e3_event = CodeWars::DataStore.instance.events
+      .select{|e| e.slug == "E03"}.first
+  }
   let(:d0_decision) {
     CodeWars::DataStore.instance.decisions
       .select{|e| e.slug == "D0"}.first
@@ -179,6 +183,17 @@ RSpec.describe 'Event' do
         invalid_values.each do |invalid_value|
           expect(e1_event.is_player_input_valid?(invalid_value))
             .to eq(false)
+        end
+      end
+    end
+  end
+
+  describe "#custom_label" do
+    context "As a E03 Event that contains a #ME# meta field" do
+      context "and the player's name is 'David'" do
+        it "returns a label customized with 'David'" do
+          CodeWars::Player.instance.name = "David"
+          expect(e03_event.custom_label[/David/].size).to be > 0
         end
       end
     end

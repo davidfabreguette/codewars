@@ -59,7 +59,7 @@ module CodeWars
       # Shows event label
       unless event.available_decisions.count == 0 and
         event.requires_all_decisions
-        ap event.label
+        ap event.custom_label
       end
 
       # Mark the decision as "made"
@@ -128,7 +128,7 @@ module CodeWars
           player_attribute_decision = event.decisions.first
         else
           available_decisions.each_with_index do |decision, i|
-            ap "#{i+1}/ #{decision.label}"
+            puts "#{i+1}/ #{decision.custom_label}"
           end
         end
 
@@ -150,6 +150,10 @@ module CodeWars
         end
 
         if player_input_is_valid
+          puts "|"
+          puts "|"
+          puts "|"
+          puts "->"
           if player_attribute_decision
             player_attribute_decision.update_player(player_input)
           end
@@ -170,12 +174,12 @@ module CodeWars
     def display_error_messages(has_exceeded_attempts, is_a_numbered_input)
       if !has_exceeded_attempts
         if is_a_numbered_input
-          ap "Please choose a valid number"
+          puts "Please choose a valid number"
         else
-          ap "Please enter something !"
+          puts "Please enter something !"
         end
       else
-        ap "Alright - game is over |o| ..."
+        puts "Alright - game is over |o| ..."
       end
     end
 

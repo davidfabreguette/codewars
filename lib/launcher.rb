@@ -92,8 +92,8 @@ module CodeWars
         # Find selected decision
         selected_decision = event.decisions[player_input.to_i]
 
-        # Maked it as chosen
-        selected_decision.chosen_at = Time.now
+        # Maked it as made
+        selected_decision.made_at = Time.now
       end
 
 

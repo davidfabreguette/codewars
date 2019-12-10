@@ -19,7 +19,7 @@ module CodeWars
     attr_accessor :current_player_input_attribute
 
     # Stores the time at which the decision was made by player
-    attr_accessor :chosen_at
+    attr_accessor :made_at
 
     def update_player(player_input)
       if CodeWars::Player.instance.respond_to? current_player_input_attribute

@@ -6,7 +6,7 @@ module CodeWars
     # This will overide any decision directive
     # Can be used in combination with "requires_all_decisions"
     # As a result, this attribute will be valid once all decisions have
-    # been chosen by player
+    # been made by player
     attr_accessor :next_event_slug
 
     # OPTIONAL This forces player to go through all the provided decisions
@@ -21,12 +21,11 @@ module CodeWars
       end
     end
 
-    # TODO : rename chosen to "made" decisions
-    # Returns only attached chosen decisions
+    # Returns only attached decisions made
     # @return [Decision]
-    def chosen_decisions
+    def decisions_made
       decisions.select do |d|
-        d.chosen_at != nil
+        d.made_at != nil
       end
     end
 

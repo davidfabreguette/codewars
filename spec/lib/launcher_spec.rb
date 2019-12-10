@@ -1,16 +1,21 @@
+require "readline"
 RSpec.describe "Launcher" do
+
   describe "#initialize" do
     it "launches welcome part !" do
+      allow(Readline).to receive(:readline).and_return("David")
       event = CodeWars::DataStore.instance.events.first
       expect do
         CodeWars::Launcher.instance
       end
       .to output(/#{CodeWars::Launcher::WELCOME_TEXT}/).to_stdout
+
     end
   end
 
   describe "#start" do
     it "launches first event part !" do
+      allow(Readline).to receive(:readline).and_return("David")
       event = CodeWars::DataStore.instance.events.first
       expect do
         CodeWars::Launcher.instance.start
@@ -37,6 +42,15 @@ RSpec.describe "Launcher" do
       expect do
         launcher = launcher.welcome
       end.to output(/#{logo + CodeWars::Launcher::WELCOME_TEXT}/).to_stdout
+    end
+  end
+
+  describe ".disable_auto_start!" do
+    it "doesn't starts the game automatically" do
+      expect do
+        CodeWars::Launcher.disable_auto_start!
+        CodeWars::Launcher.instance
+      end.to output("").to_stdout
     end
   end
 end

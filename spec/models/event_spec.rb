@@ -11,17 +11,61 @@ RSpec.describe 'Event' do
     e1_event = CodeWars::DataStore.instance.events
       .select{|e| e.slug == "E1"}.first
   }
+  let(:d0_decision) {
+    CodeWars::DataStore.instance.decisions
+      .select{|e| e.slug == "D0"}.first
+  }
   let(:d1_decision) {
     CodeWars::DataStore.instance.decisions
       .select{|e| e.slug == "D1"}.first
   }
+  let(:d2_decision) {
+    CodeWars::DataStore.instance.decisions
+      .select{|e| e.slug == "D2"}.first
+  }
+  let(:d3_decision) {
+    CodeWars::DataStore.instance.decisions
+      .select{|e| e.slug == "D3"}.first
+  }
+  let(:d0_decision_made) {
+    d0_decision.made_at = Time.now
+    d0_decision
+  }
   let(:d1_decision_made) {
-    d1_decision.was_made = true
+    d1_decision.made_at = Time.now
+    d1_decision
+  }
+  let(:d2_decision_made) {
+    d2_decision.made_at = Time.now
+    d2_decision
+  }
+  let(:d3_decision_made) {
+    d3_decision.made_at = Time.now
+    d3_decision
   }
 
   describe "#decisions" do
     it "returns decision D0 for E0 event" do
       expect(e0_event.decisions.count).to be > 0
+    end
+  end
+
+  describe "#available_decisions" do
+    context "when D0 has already been made" do
+      it "returns nothing !" do
+        d0_decision_made
+        expect(e0_event.available_decisions.count).to be == 0
+      end
+    end
+  end
+
+  describe "#made_decisions" do
+    context "when D0 has already been made" do
+      it "returns D0 decision" do
+        d0_decision_made
+        expect(e0_event.decisions_made.count).to be == 1
+        expect(e0_event.decisions_made.first.slug).to eq("D0")
+      end
     end
   end
 
@@ -38,12 +82,12 @@ RSpec.describe 'Event' do
     end
   end
 
-  describe "#raw_next_event" do
+  describe "#next_event_in_the_list" do
     context "As a E0 event" do
       it "returns E1 event" do
         next_event = CodeWars::DataStore.instance.events
           .select{|e| e.slug == "E01"}.first
-        expect(e0_event.raw_next_event).to eq(next_event)
+        expect(e0_event.next_event_in_the_list).to eq(next_event)
       end
     end
   end
@@ -62,26 +106,37 @@ RSpec.describe 'Event' do
         it "returns E1 event (next event on the list)" do
           next_event = CodeWars::DataStore.instance.events
           .select{|e| e.slug == "E01"}.first
-          expect(e0_event.raw_next_event).to eq(next_event)
+          expect(e0_event.next_event_in_the_list).to eq(next_event)
           expect(e0_event.resolve_next_event.indexed_at).to eq(e0_event.indexed_at + 1)
         end
       end
     end
     context "As a E1 event" do
       context "that has a decision (D1, D2, D3) and requires all decisions" do
-        context "and only D1 decision has been made so far" do
-          it "returns D1 next event (as it's the latest made decision)" do
-            #TODO :
+        context "and only D1 decision is being made" do
+          it "returns D1 next event E2 (as it's the latest made decision)" do
+            expect(e1_event.resolve_next_event(d1_decision).slug).to eq("E2")
           end
         end
-        context "and D1, and D2 decisions have been made so far" do
-          it "returns D2 next event (as it's the latest made decision)" do
-            #TODO :
+        context "and D1 decision has been made, and D2 decisions is being made" do
+          it "returns D2 next event E3 (as it's the latest made decision)" do
+            d1_decision_made
+            expect(e1_event.resolve_next_event(d2_decision).slug).to eq("E3")
           end
         end
-        context "and D1, D2, and D3 decisions have been made so far" do
-          it "returns E5 next event (as it's E1 next event and all decisions have been made)" do
-            #TODO :
+        context "and D1 and D2 decisions have been made, and D3 decision is being made" do
+          it "returns D2 next event E3 (as it's the latest made decision)" do
+            d1_decision_made
+            d2_decision_made
+            expect(e1_event.resolve_next_event(d3_decision).slug).to eq("E4")
+          end
+        end
+        context "and D1, D2, and D3 decisions have been made" do
+          it "returns E5 next event E4 (as it's E1 next event and all decisions have been made)" do
+            d1_decision_made
+            d2_decision_made
+            d3_decision_made
+            expect(e1_event.resolve_next_event.slug).to eq("E5")
           end
         end
       end
@@ -90,15 +145,15 @@ RSpec.describe 'Event' do
 
   describe "#decisions_made" do
     context "As a E1 event (which requires all decisions)" do
-      context "when D1 and D2 were made" do
-        it "returns only D1 and D2 decisions" do
-          d1_and_d2_decisions = e1_event.decisions
-          .select{|d| %w(D1 D2).include?(d.slug)}
-          d1_and_d2_decisions.each do |d|
-            d.made_at = Time.now
-          end
-          e0_event = CodeWars::DataStore.instance.events.select{|e| e.slug == "E1"}.first
-          expect(e0_event.decisions_made.count).to eq(2)
+      context "when D1 was made" do
+        it "returns only D1 decision" do
+          e1_event.decisions
+            .select{|d|
+               d.slug == "D1" ?
+                 d.made_at = Time.now
+               : d.made_at = nil
+            }
+          expect(e1_event.decisions_made.count).to eq(1)
         end
       end
     end

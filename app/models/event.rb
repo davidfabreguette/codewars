@@ -29,6 +29,14 @@ module CodeWars
       end
     end
 
+    # Returns only attached available (non-made) decisions
+    # @return [Decision]
+    def available_decisions
+      decisions.select do |d|
+        d.made_at == nil
+      end
+    end
+
     # Wether or not the event asks for a player input
     # that will update any of his attribtes (name?)
     # @return [Boolean]
@@ -38,26 +46,42 @@ module CodeWars
         .size > 0
     end
 
-    # Returns next raw static event
+    # Returns next event in the list
     # @return [Event]
-    def raw_next_event
+    def next_event_in_the_list
       CodeWars::DataStore.instance.data[:events][self.indexed_at + 1]
     end
 
-    # This methods is in charge of resolving next event to display
+    # Returns the static next event
+    # based on #next_event_slug attribute
+    # @return [Event]
+    def static_next_event
+      CodeWars::DataStore.instance.data[:events]
+        .select{|e| e.slug == next_event_slug}.first
+    end
+
+    # This methods is in charge of resolving next event to display based on
+    # any current decision the player is making
+    # @params [Decision] Current decision the player is making
     # @return [Event] The next event to display
-    def resolve_next_event
+    def resolve_next_event(current_decision=nil)
       next_event = nil
 
-      # Go through the events list if no decisions given
+      # if no decisions is attached
       # or if this is player_attribute decision related event
+      # then go through the events list
       if has_a_player_attribute_decision? or
         decisions.count == 0
-        next_event = raw_next_event
+        next_event = next_event_in_the_list
 
-      # Or resolve next event based on player decision choice
-      else
+      # if there's a current decision
+      elsif current_decision
+        next_event = current_decision.next_event
 
+      # if the event requires all decisions to be made
+      elsif requires_all_decisions and
+        available_decisions.count == 0
+        next_event = static_next_event
       end
 
       next_event

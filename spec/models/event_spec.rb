@@ -158,4 +158,29 @@ RSpec.describe 'Event' do
       end
     end
   end
+
+  describe "#is_player_input_valid?" do
+    context "as a E0 event (that has a player attribute)" do
+      it "marks 'David' as a valid input" do
+        expect(e0_event.is_player_input_valid?("David"))
+          .to eq(true)
+      end
+      it "marks '' and nil as an valid input" do
+        invalid_values = ["", nil]
+        invalid_values.each do |invalid_value|
+          expect(e0_event.is_player_input_valid?(invalid_value))
+            .to eq(false)
+        end
+      end
+    end
+    context "as a E1 event (that has 3 decisions)" do
+      it "marks 'David', nil, or any number higher than 3 as an invalid input" do
+        invalid_values = ["David", nil, 4, 10]
+        invalid_values.each do |invalid_value|
+          expect(e1_event.is_player_input_valid?(invalid_value))
+            .to eq(false)
+        end
+      end
+    end
+  end
 end

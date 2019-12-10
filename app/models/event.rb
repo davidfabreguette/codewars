@@ -56,8 +56,10 @@ module CodeWars
     # based on #next_event_slug attribute
     # @return [Event]
     def static_next_event
-      CodeWars::DataStore.instance.data[:events]
-        .select{|e| e.slug == next_event_slug}.first
+      if next_event_slug and next_event_slug.size > 0
+        CodeWars::DataStore.instance.data[:events]
+          .select{|e| e.slug == next_event_slug}.first
+      end
     end
 
     # This methods is in charge of resolving next event to display based on
@@ -72,7 +74,7 @@ module CodeWars
       # then go through the events list
       if has_a_player_attribute_decision? or
         decisions.count == 0
-        next_event = next_event_in_the_list
+        next_event = static_next_event || next_event_in_the_list
 
       # if there's a current decision
       elsif current_decision
@@ -85,6 +87,25 @@ module CodeWars
       end
 
       next_event
+    end
+
+
+    # Returns wether or not the player input is considered valid
+    # @param [String] player_input
+    # @return [Boolean] Wether or not the input is a valid one
+    def is_player_input_valid?(player_input)
+      player_input_is_valid = false
+
+      if player_input && player_input.size > 0
+        if has_a_player_attribute_decision?
+          player_input_is_valid = true
+        else player_input and (player_i = player_input.to_i)
+          player_input_is_valid = (player_i > 0 and
+            player_i <= available_decisions.count)
+        end
+      end
+
+      player_input_is_valid
     end
   end
 end

@@ -1,4 +1,4 @@
-module CodeWars    
+module CodeWars
   ##
   # Base CodeWarsModel class
   # Can be used later on to add model global features ...
@@ -10,6 +10,10 @@ module CodeWars
     # Model slug
     # Allows to create models relationship through seed yml files
     attr_accessor :slug
+
+    # Stores the index value of the event
+    # to be able to get next event without going through the whole array
+    attr_accessor :indexed_at
 
     def initialize
       require 'securerandom'
@@ -24,6 +28,13 @@ module CodeWars
           self.send("#{key}=", value)
         end
       end
+    end
+
+    # Returns DataStore instance name (underscored, pluralized, symoblized)
+    # @return [String]
+    def data_store_name
+      # We remove module prefix from the equation
+      self.class.to_s.underscore.gsub(/^code_wars\//, "").pluralize.to_sym
     end
   end
 end

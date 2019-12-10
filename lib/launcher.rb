@@ -21,7 +21,6 @@ module CodeWars
       CodeWars::DataStore.instance
 
       require 'readline'
-      require "awesome_print"
 
       if @@auto_start_enabled
         start

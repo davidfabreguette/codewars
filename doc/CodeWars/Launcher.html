@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+<meta charset="UTF-8">
+
+<title>class CodeWars::Launcher - RDoc Documentation</title>
+
+<script type="text/javascript">
+  var rdoc_rel_prefix = "../";
+  var index_rel_prefix = "../";
+</script>
+
+<script src="../js/navigation.js" defer></script>
+<script src="../js/search.js" defer></script>
+<script src="../js/search_index.js" defer></script>
+<script src="../js/searcher.js" defer></script>
+<script src="../js/darkfish.js" defer></script>
+
+<link href="../css/fonts.css" rel="stylesheet">
+<link href="../css/rdoc.css" rel="stylesheet">
+
+
+
+<body id="top" role="document" class="class">
+<nav role="navigation">
+  <div id="project-navigation">
+    <div id="home-section" role="region" title="Quick navigation" class="nav-section">
+  <h2>
+    <a href="../index.html" rel="home">Home</a>
+  </h2>
+
+  <div id="table-of-contents-navigation">
+    <a href="../table_of_contents.html#pages">Pages</a>
+    <a href="../table_of_contents.html#classes">Classes</a>
+    <a href="../table_of_contents.html#methods">Methods</a>
+  </div>
+</div>
+
+    <div id="search-section" role="search" class="project-section initially-hidden">
+  <form action="#" method="get" accept-charset="utf-8">
+    <div id="search-field-wrapper">
+      <input id="search-field" role="combobox" aria-label="Search"
+             aria-autocomplete="list" aria-controls="search-results"
+             type="text" name="search" placeholder="Search" spellcheck="false"
+             title="Type to search, Up and Down to navigate, Enter to load">
+    </div>
+
+    <ul id="search-results" aria-label="Search Results"
+        aria-busy="false" aria-expanded="false"
+        aria-atomic="false" class="initially-hidden"></ul>
+  </form>
+</div>
+
+  </div>
+
+  
+
+  <div id="class-metadata">
+    
+    <div id="parent-class-section" class="nav-section">
+  <h3>Parent</h3>
+
+  
+  <p class="link"><a href="../Object.html">Object</a>
+  
+</div>
+
+    <div id="includes-section" class="nav-section">
+  <h3>Included Modules</h3>
+
+  <ul class="link-list">
+  
+  
+    <li><span class="include">Singleton</span>
+  
+  
+  </ul>
+</div>
+
+    
+    <!-- Method Quickref -->
+<div id="method-list-section" class="nav-section">
+  <h3>Methods</h3>
+
+  <ul class="link-list" role="directory">
+    
+    <li ><a href="#method-c-new">::new</a>
+    
+    <li ><a href="#method-i-launch">#launch</a>
+    
+    <li ><a href="#method-i-resolve_next_event">#resolve_next_event</a>
+    
+    <li ><a href="#method-i-start">#start</a>
+    
+    <li ><a href="#method-i-welcome">#welcome</a>
+    
+  </ul>
+</div>
+
+  </div>
+</nav>
+
+<main role="main" aria-labelledby="class-CodeWars::Launcher">
+  <h1 id="class-CodeWars::Launcher" class="class">
+    class CodeWars::Launcher
+  </h1>
+
+  <section class="description">
+    
+  </section>
+
+  
+  <section id="5Buntitled-5D" class="documentation-section">
+    
+
+    
+
+    
+    <section class="constants-list">
+      <header>
+        <h3>Constants</h3>
+      </header>
+      <dl>
+      
+        <dt id="DIRS_TO_LOAD">DIRS_TO_LOAD
+        
+        <dd>
+        
+      
+        <dt id="WELCOME_TEXT">WELCOME_TEXT
+        
+        <dd>
+        
+      
+      </dl>
+    </section>
+    
+
+    
+
+    
+     <section id="public-class-5Buntitled-5D-method-details" class="method-section">
+       <header>
+         <h3>Public Class Methods</h3>
+       </header>
+
+    
+      <div id="method-c-new" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">new</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Initilaze the app, gets the first event to pass it on and get the game on !</p>
+          
+          
+
+          
+          <div class="method-source-code" id="new-source">
+            <pre><span class="ruby-comment"># File lib/launcher.rb, line 16</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">initialize</span>
+
+  <span class="ruby-keyword">self</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">load_all_files</span>
+
+  <span class="ruby-constant">CodeWars</span><span class="ruby-operator">::</span><span class="ruby-constant">DataStore</span>.<span class="ruby-identifier">instance</span>
+
+  <span class="ruby-identifier">require</span> <span class="ruby-string">&#39;readline&#39;</span>
+  <span class="ruby-identifier">require</span> <span class="ruby-string">&quot;awesome_print&quot;</span>
+
+  <span class="ruby-identifier">start</span>
+
+  <span class="ruby-comment">#</span>
+  <span class="ruby-comment"># ap &quot;Before anything - enter your name :&quot;</span>
+  <span class="ruby-comment"># current_player = Readline.readline(&#39;❞ &#39;, true)</span>
+  <span class="ruby-comment">#</span>
+  <span class="ruby-comment"># ap &quot;Hey #{current_player} ! Let&#39;s get into this ...&quot;</span>
+
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+    </section>
+  
+     <section id="public-instance-5Buntitled-5D-method-details" class="method-section">
+       <header>
+         <h3>Public Instance Methods</h3>
+       </header>
+
+    
+      <div id="method-i-launch" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">launch</span><span
+            class="method-args">(event)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Launches the given event the the screen @param <a href="Event.html"><code>Event</code></a> event The event to be launched on screen @return <a href="Event.html"><code>Event</code></a> Next event to be launched on screen</p>
+          
+          
+
+          
+          <div class="method-source-code" id="launch-source">
+            <pre><span class="ruby-comment"># File lib/launcher.rb, line 56</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">launch</span>(<span class="ruby-identifier">event</span>)
+
+  <span class="ruby-identifier">player_name</span> = <span class="ruby-constant">CodeWars</span><span class="ruby-operator">::</span><span class="ruby-constant">Player</span>.<span class="ruby-identifier">instance</span>.<span class="ruby-identifier">name</span> <span class="ruby-operator">||</span> <span class="ruby-string">&quot;&quot;</span>
+  <span class="ruby-identifier">player_input</span> = <span class="ruby-keyword">nil</span>
+
+  <span class="ruby-comment"># Shows event label</span>
+  <span class="ruby-identifier">ap</span> <span class="ruby-identifier">event</span>.<span class="ruby-identifier">label</span>
+
+  <span class="ruby-comment"># Search for any decisions choices to provide</span>
+  <span class="ruby-keyword">if</span> (<span class="ruby-identifier">decisions</span> = <span class="ruby-identifier">event</span>.<span class="ruby-identifier">decisions</span>).<span class="ruby-identifier">count</span> <span class="ruby-operator">&gt;</span> <span class="ruby-value">0</span>
+    <span class="ruby-identifier">decision_player_attribute</span> = <span class="ruby-keyword">nil</span>
+
+    <span class="ruby-identifier">decisions</span>.<span class="ruby-identifier">each_with_index</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">decision</span>, <span class="ruby-identifier">i</span><span class="ruby-operator">|</span>
+      <span class="ruby-keyword">if</span> <span class="ruby-identifier">decision</span>.<span class="ruby-identifier">current_player_input_attribute</span>.<span class="ruby-identifier">size</span> <span class="ruby-operator">&gt;</span> <span class="ruby-value">0</span>
+        <span class="ruby-identifier">decision_player_attribute</span> = <span class="ruby-identifier">decision</span>.<span class="ruby-identifier">current_player_input_attribute</span>
+        <span class="ruby-keyword">break</span>
+      <span class="ruby-keyword">end</span>
+      <span class="ruby-identifier">ap</span> <span class="ruby-node">&quot;#{i+1}/ #{decision.label}&quot;</span>
+    <span class="ruby-keyword">end</span>
+
+    <span class="ruby-identifier">player_input</span> = <span class="ruby-constant">Readline</span>.<span class="ruby-identifier">readline</span>(<span class="ruby-node">&quot;#{player_name}❞ &quot;</span>, <span class="ruby-keyword">true</span>)
+
+    <span class="ruby-keyword">if</span> <span class="ruby-identifier">decision_player_attribute</span>
+      <span class="ruby-constant">CodeWars</span><span class="ruby-operator">::</span><span class="ruby-constant">Player</span>.<span class="ruby-identifier">instance</span>.<span class="ruby-identifier">update</span>({
+        <span class="ruby-identifier">decision_player_attribute</span> <span class="ruby-operator">=&gt;</span> <span class="ruby-identifier">player_input</span>
+        })
+    <span class="ruby-keyword">else</span>
+
+    <span class="ruby-keyword">end</span>
+
+
+  <span class="ruby-keyword">end</span>
+
+  <span class="ruby-keyword">if</span> <span class="ruby-identifier">next_event</span> = <span class="ruby-identifier">resolve_next_event</span>(<span class="ruby-identifier">event</span>, <span class="ruby-identifier">player_input</span>)
+    <span class="ruby-identifier">launch</span>(<span class="ruby-identifier">next_event</span>)
+  <span class="ruby-keyword">else</span>
+    <span class="ruby-identifier">ap</span> <span class="ruby-string">&quot;This the end !&quot;</span>
+  <span class="ruby-keyword">end</span>
+
+  <span class="ruby-comment"># current_player = Readline.readline(&#39;❞ &#39;, true)</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-resolve_next_event" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">resolve_next_event</span><span
+            class="method-args">(current_event, player_input)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>This methods is in charge of resolving next event to display @param [Event] current_event The currently displayed event @param optional [String] player_input The input the player just entered @return [Event] The next event to display</p>
+          
+          
+
+          
+          <div class="method-source-code" id="resolve_next_event-source">
+            <pre><span class="ruby-comment"># File lib/launcher.rb, line 102</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">resolve_next_event</span>(<span class="ruby-identifier">current_event</span>, <span class="ruby-identifier">player_input</span>)
+
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-start" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">start</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Starts the game ! Shows the welcome section &amp; launches the first event</p>
+          
+          
+
+          
+          <div class="method-source-code" id="start-source">
+            <pre><span class="ruby-comment"># File lib/launcher.rb, line 36</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">start</span>
+  <span class="ruby-comment"># Show the welcome section</span>
+  <span class="ruby-identifier">welcome</span>
+
+  <span class="ruby-comment"># Get the first event</span>
+  <span class="ruby-identifier">event</span> = <span class="ruby-constant">CodeWars</span><span class="ruby-operator">::</span><span class="ruby-constant">DataStore</span>.<span class="ruby-identifier">instance</span>.<span class="ruby-identifier">events</span>.<span class="ruby-identifier">first</span>
+  <span class="ruby-identifier">launch</span>(<span class="ruby-identifier">event</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-welcome" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">welcome</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Shows the game logo &amp; welcome text</p>
+          
+          
+
+          
+          <div class="method-source-code" id="welcome-source">
+            <pre><span class="ruby-comment"># File lib/launcher.rb, line 46</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">welcome</span>
+  <span class="ruby-identifier">logo</span> = <span class="ruby-constant">File</span>.<span class="ruby-identifier">read</span>(<span class="ruby-string">&quot;app/assets/logo.txt&quot;</span>)
+  <span class="ruby-identifier">print</span> <span class="ruby-identifier">logo</span>
+
+  <span class="ruby-identifier">puts</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">class</span><span class="ruby-operator">::</span><span class="ruby-constant">WELCOME_TEXT</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+    </section>
+  
+  </section>
+</main>
+
+
+<footer id="validator-badges" role="contentinfo">
+  <p><a href="https://validator.w3.org/check/referer">Validate</a>
+  <p>Generated by <a href="https://ruby.github.io/rdoc/">RDoc</a> 6.2.0.
+  <p>Based on <a href="http://deveiate.org/projects/Darkfish-RDoc/">Darkfish</a> by <a href="http://deveiate.org">Michael Granger</a>.
+</footer>
+

@@ -1,3 +1,25 @@
 - label: "A long time ago, in a galaxy far, far away… the republic, lead by the Sidekiq chancellor, works relentlessly to end Sith Lords supremacy spearheaded by the gloomy and cold Dark Cobol. The republic desperately needs to find the planet where Sith Lords are hiding."
 - label: "Now that you officially became a Jedi, your mission will be to find the hidden planet and kill Dark Cobol."
 - label: "But before anything, enter your name below :"
+  slug: E0
+- label: "You have been called to be present at the Jedi’s council - this is an emergency !"
+  slug: E01
+- label: "Council : « As you may already know, Sidekiq chancellor has been targeted by a murder attempt. Luckily, only one of his servants has been injured by the explosion. »"
+  slug: E02
+- label: "« Your first mission as a Jedi Master #ME# will be to find the person responsible of this conspiracy against the republic. You can start off by going on the crime scene and get some clues related to the explosion. May the force be with you ! »"
+  slug: E03
+- label: "On the crime scene, what do I want to do ?"
+  slug: E1
+  next_event_slug: E5
+  requires_all_decisions: true
+- label: |
+    #ME# : « What really happened before and during the explosion ? »
+    Custody : « As we were preparing to go out the spaceship and unlocking the back door, a big explosion occurred at the back of the ship. Some strange red smoke came out of there »
+    #ME# : « hum, that’s interesting. »
+  slug: E2
+- label: "This hangar is pretty wide, many people could have been passing by. It seems like it’ll be tricky to find the guy who did this."
+  slug: E3
+- label: "As you kneel down, you find the detonator of the bomb. You also take a sample of this mysterious red powder that probably came out of the explosion."
+  slug: E4
+- label: "Now then, what do I decide to do ?"
+  slug: E5

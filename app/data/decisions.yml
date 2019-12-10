@@ -2,15 +2,18 @@
 - slug: D0
   decided_event_slug: E0
   current_player_input_attribute: name
+
 - slug: D1
   decided_event_slug: E1
   label: "Observe the details of the crime scene"
-  next_event_slug: E5
+  next_event_slug: E2
+
 - slug: D2
   decided_event_slug: E1
-  next_event_slug: E5
+  next_event_slug: E3
   label: "Ask one of the custody that was present at the time of the explosion some details"
+
 - slug: D3
   decided_event_slug: E1
-  next_event_slug: E5
+  next_event_slug: E4
   label: "Search some details on the ground near the explosion scraps"

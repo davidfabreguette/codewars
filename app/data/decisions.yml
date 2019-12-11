@@ -5,15 +5,73 @@
 
 - slug: D1
   decided_event_slug: E1
+  next_event_slug: E3
   label: "Observe the details of the crime scene"
-  next_event_slug: E2
 
 - slug: D2
   decided_event_slug: E1
-  next_event_slug: E3
+  next_event_slug: E2
   label: "Ask one of the custody that was present at the time of the explosion some details"
 
 - slug: D3
   decided_event_slug: E1
   next_event_slug: E4
   label: "Search some details on the ground near the explosion scraps"
+
+- slug: D4
+  next_event_slug: E6
+  decided_event_slug: E5
+  label: "Go see my friend Wiki knows everything about everything. He’ll probably be able to give me some info about this detonator !"
+
+- slug: D5
+  next_event_slug: E7
+  decided_event_slug: E5
+  label: "Go to the lab to analyse this mysterious red powder"
+
+- slug: D6
+  next_event_slug: E10
+  decided_event_slug: E9
+  label: "Nope !"
+
+- slug: D7
+  next_event_slug: E11
+  decided_event_slug: E9
+  label: "Yeah let's go !"
+
+- slug: D8
+  next_event_slug: E12
+  decided_event_slug: E11
+  label: "To the right, at the counter ?"
+
+- slug: D9
+  next_event_slug: E13
+  decided_event_slug: E11
+  label: "To the left, near some cheesy videogames ?"
+
+- slug: D10
+  next_event_slug: E14
+  decided_event_slug: E13
+  label: "No way"
+
+- slug: D11
+  next_event_slug: E15
+  decided_event_slug: E13
+  label: "All right, let’s go to Koriban !"
+
+- slug: D12
+  decided_event_slug: E17
+  label: "Force attack (-10LP)"
+  next_event_slug:
+    - E18
+    - E19
+    - E20
+  life_points: 10
+
+- slug: D13
+  decided_event_slug: E17
+  label: "Laser sword attack (-5LP)"
+  life_points: 5
+  next_event_slug:
+    - E18
+    - E19
+    - E20

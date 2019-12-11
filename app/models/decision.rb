@@ -21,6 +21,9 @@ module CodeWars
     # Stores the time at which the decision was made by player
     attr_accessor :made_at
 
+    # OPTIONAL IF set - defines life points attack in a final boss fight
+    attr_accessor :life_points
+
     # This methods updates #current_player_input_attribute player attribute
     # with given
     # @param [String] player_input
@@ -35,8 +38,17 @@ module CodeWars
 
     # @return [Event] next event saved in store
     def next_event
-      CodeWars::DataStore.instance.events
-        .select{|e| e.slug == self.next_event_slug}.first
+      if next_event_slug
+        case next_event_slug.class.to_s
+        when "String"
+          CodeWars::DataStore.instance.events
+            .select{|e| e.slug == self.next_event_slug}.first
+        when "Array"
+          sample_index = rand(next_event_slug.size)
+          CodeWars::DataStore.instance.events
+            .select{|e| e.slug == next_event_slug[sample_index]}.first
+        end
+      end
     end
 
   end

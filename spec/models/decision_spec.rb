@@ -12,13 +12,19 @@ RSpec.describe 'Decision' do
     end
   end
   describe "#next_event" do
-    context "when D2 decision" do
-      it "returns D2 next_event E3" do
+    context "when D2 decision (next_event_slug is a String)" do
+      it "returns D2 next_event E2" do
         decision = CodeWars::DataStore.instance
           .decisions.select{|d| d.slug == "D2"}.first
-        next_event = CodeWars::DataStore.instance
-          .events.select{|d| d.slug == "E3"}.first
-        expect(decision.next_event).to eq(next_event)
+        expect(decision.next_event.slug).to eq("E2")
+      end
+    end
+
+    context "when D12 decision (next_event_slug is an Array)" do
+      it "returns a random value included in the array" do
+        decision = CodeWars::DataStore.instance
+          .decisions.select{|d| d.slug == "D12"}.first
+        expect(%w(E18 E19 E20)).to include(decision.next_event.slug)
       end
     end
   end

@@ -1,6 +1,6 @@
 # CodeWars
 
-This a little role-player game around StarWars theme ! Some "easter eggs" have been left out 
+This a little role-player game around StarWars theme ! Some "easter eggs" have been left out
 in the story related to web developpers world. Will you be wise enouth to find them ? History will tell us !
 
 # Install
@@ -19,3 +19,8 @@ Let's get this started !
 ruby start.rb
 ```
 
+# Tests
+
+```
+rspec
+```

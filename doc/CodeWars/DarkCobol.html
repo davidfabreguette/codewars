@@ -89,7 +89,7 @@
     
     <li ><a href="#method-i-attack-21">#attack!</a>
     
-    <li ><a href="#method-i-is_beaten-3F">#is_beaten?</a>
+    <li ><a href="#method-i-beaten-3F">#beaten?</a>
     
   </ul>
 </div>
@@ -211,9 +211,7 @@
             <pre><span class="ruby-comment"># File app/models/dark_cobol.rb, line 20</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">attack!</span>(<span class="ruby-identifier">life_points_attack</span>)
   <span class="ruby-keyword">self</span>.<span class="ruby-identifier">life_points</span> <span class="ruby-operator">-=</span> <span class="ruby-identifier">life_points_attack</span>
-  <span class="ruby-keyword">if</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">life_points</span> <span class="ruby-operator">&lt;</span> <span class="ruby-value">0</span>
-    <span class="ruby-keyword">self</span>.<span class="ruby-identifier">life_points</span> = <span class="ruby-value">0</span>
-  <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">self</span>.<span class="ruby-identifier">life_points</span> = <span class="ruby-value">0</span> <span class="ruby-keyword">if</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">life_points</span>.<span class="ruby-identifier">negative?</span>
   <span class="ruby-identifier">life_points</span>
 <span class="ruby-keyword">end</span></pre>
           </div>
@@ -226,10 +224,10 @@
       </div>
 
     
-      <div id="method-i-is_beaten-3F" class="method-detail ">
+      <div id="method-i-beaten-3F" class="method-detail ">
         
         <div class="method-heading">
-          <span class="method-name">is_beaten?</span><span
+          <span class="method-name">beaten?</span><span
             class="method-args">()</span>
           
           <span class="method-click-advice">click to toggle source</span>
@@ -246,10 +244,10 @@
           
 
           
-          <div class="method-source-code" id="is_beaten-3F-source">
+          <div class="method-source-code" id="beaten-3F-source">
             <pre><span class="ruby-comment"># File app/models/dark_cobol.rb, line 15</span>
-<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">is_beaten?</span>
-  <span class="ruby-identifier">life_points</span> <span class="ruby-operator">==</span> <span class="ruby-value">0</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">beaten?</span>
+  <span class="ruby-identifier">life_points</span>.<span class="ruby-identifier">zero?</span>
 <span class="ruby-keyword">end</span></pre>
           </div>
           

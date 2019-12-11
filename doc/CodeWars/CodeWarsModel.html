@@ -182,7 +182,7 @@
 
           
           <div class="method-source-code" id="new-source">
-            <pre><span class="ruby-comment"># File app/models/code_wars_model.rb, line 18</span>
+            <pre><span class="ruby-comment"># File app/models/code_wars_model.rb, line 17</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">initialize</span>
   <span class="ruby-identifier">require</span> <span class="ruby-string">&#39;securerandom&#39;</span>
   <span class="ruby-ivar">@id</span> = <span class="ruby-constant">SecureRandom</span>.<span class="ruby-identifier">hex</span>(<span class="ruby-value">8</span>)
@@ -227,11 +227,11 @@
 
           
           <div class="method-source-code" id="custom_label-source">
-            <pre><span class="ruby-comment"># File app/models/code_wars_model.rb, line 45</span>
+            <pre><span class="ruby-comment"># File app/models/code_wars_model.rb, line 41</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">custom_label</span>
-  <span class="ruby-keyword">if</span> <span class="ruby-identifier">respond_to?</span>(<span class="ruby-value">:label</span>) <span class="ruby-keyword">and</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">label</span>
-    <span class="ruby-keyword">self</span>.<span class="ruby-identifier">label</span>.<span class="ruby-identifier">gsub</span>(<span class="ruby-string">&quot;#ME#&quot;</span>, <span class="ruby-constant">CodeWars</span><span class="ruby-operator">::</span><span class="ruby-constant">Player</span>.<span class="ruby-identifier">instance</span>.<span class="ruby-identifier">name</span> <span class="ruby-operator">||</span> <span class="ruby-string">&quot;&quot;</span>)
-  <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">return</span> <span class="ruby-keyword">unless</span> <span class="ruby-identifier">respond_to?</span>(<span class="ruby-value">:label</span>) <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">label</span>
+
+  <span class="ruby-identifier">label</span>.<span class="ruby-identifier">gsub</span>(<span class="ruby-string">&#39;#ME#&#39;</span>, <span class="ruby-constant">CodeWars</span><span class="ruby-operator">::</span><span class="ruby-constant">Player</span>.<span class="ruby-identifier">instance</span>.<span class="ruby-identifier">name</span> <span class="ruby-operator">||</span> <span class="ruby-string">&#39;&#39;</span>)
 <span class="ruby-keyword">end</span></pre>
           </div>
           
@@ -265,10 +265,10 @@
 
           
           <div class="method-source-code" id="data_store_name-source">
-            <pre><span class="ruby-comment"># File app/models/code_wars_model.rb, line 35</span>
+            <pre><span class="ruby-comment"># File app/models/code_wars_model.rb, line 32</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">data_store_name</span>
   <span class="ruby-comment"># We remove module prefix from the equation</span>
-  <span class="ruby-keyword">self</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">to_s</span>.<span class="ruby-identifier">underscore</span>.<span class="ruby-identifier">gsub</span>(<span class="ruby-regexp">/^code_wars\//</span>, <span class="ruby-string">&quot;&quot;</span>).<span class="ruby-identifier">pluralize</span>.<span class="ruby-identifier">to_sym</span>
+  <span class="ruby-keyword">self</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">to_s</span>.<span class="ruby-identifier">underscore</span>.<span class="ruby-identifier">gsub</span>(<span class="ruby-regexp">%r{^code_wars/}</span>, <span class="ruby-string">&#39;&#39;</span>).<span class="ruby-identifier">pluralize</span>.<span class="ruby-identifier">to_sym</span>
 <span class="ruby-keyword">end</span></pre>
           </div>
           
@@ -284,7 +284,7 @@
         
         <div class="method-heading">
           <span class="method-name">load_attributes</span><span
-            class="method-args">(data={})</span>
+            class="method-args">(data = {})</span>
           
           <span class="method-click-advice">click to toggle source</span>
           
@@ -302,12 +302,10 @@
 
           
           <div class="method-source-code" id="load_attributes-source">
-            <pre><span class="ruby-comment"># File app/models/code_wars_model.rb, line 25</span>
-<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">load_attributes</span>(<span class="ruby-identifier">data</span>={})
+            <pre><span class="ruby-comment"># File app/models/code_wars_model.rb, line 24</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">load_attributes</span>(<span class="ruby-identifier">data</span> = {})
   <span class="ruby-identifier">data</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">key</span>, <span class="ruby-identifier">value</span><span class="ruby-operator">|</span>
-    <span class="ruby-keyword">if</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">respond_to?</span> <span class="ruby-node">&quot;#{key}=&quot;</span>
-      <span class="ruby-keyword">self</span>.<span class="ruby-identifier">send</span>(<span class="ruby-node">&quot;#{key}=&quot;</span>, <span class="ruby-identifier">value</span>)
-    <span class="ruby-keyword">end</span>
+    <span class="ruby-identifier">send</span>(<span class="ruby-node">&quot;#{key}=&quot;</span>, <span class="ruby-identifier">value</span>) <span class="ruby-keyword">if</span> <span class="ruby-identifier">respond_to?</span> <span class="ruby-node">&quot;#{key}=&quot;</span>
   <span class="ruby-keyword">end</span>
 <span class="ruby-keyword">end</span></pre>
           </div>

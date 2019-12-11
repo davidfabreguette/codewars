@@ -126,9 +126,9 @@
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">disable_puts_and_prints</span>
   <span class="ruby-comment"># Disable console outputs temporarily</span>
   <span class="ruby-constant">RSpec</span><span class="ruby-operator">::</span><span class="ruby-constant">Mocks</span>.<span class="ruby-identifier">with_temporary_scope</span> <span class="ruby-keyword">do</span>
-    <span class="ruby-node">%w(puts print)</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">p_cmd</span><span class="ruby-operator">|</span>
+    <span class="ruby-node">%w[puts print]</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">p_cmd</span><span class="ruby-operator">|</span>
       <span class="ruby-identifier">allow_any_instance_of</span>(<span class="ruby-constant">CodeWars</span><span class="ruby-operator">::</span><span class="ruby-constant">Launcher</span>).<span class="ruby-identifier">to</span> <span class="ruby-identifier">receive</span>(<span class="ruby-identifier">p_cmd</span>.<span class="ruby-identifier">to_sym</span>)
-      .<span class="ruby-identifier">and_return</span>(<span class="ruby-keyword">true</span>)
+        .<span class="ruby-identifier">and_return</span>(<span class="ruby-keyword">true</span>)
     <span class="ruby-keyword">end</span>
   <span class="ruby-keyword">end</span>
 <span class="ruby-keyword">end</span></pre>

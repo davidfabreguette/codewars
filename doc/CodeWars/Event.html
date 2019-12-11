@@ -82,9 +82,9 @@
     
     <li ><a href="#method-i-has_a_player_attribute_decision-3F">#has_a_player_attribute_decision?</a>
     
-    <li ><a href="#method-i-is_player_input_valid-3F">#is_player_input_valid?</a>
-    
     <li ><a href="#method-i-next_event_in_the_list">#next_event_in_the_list</a>
+    
+    <li ><a href="#method-i-player_input_valid-3F">#player_input_valid?</a>
     
     <li ><a href="#method-i-resolve_next_event">#resolve_next_event</a>
     
@@ -103,6 +103,11 @@
 
   <section class="description">
     
+<pre class="ruby"><span class="ruby-constant">This</span> <span class="ruby-identifier">is</span> <span class="ruby-identifier">the</span> <span class="ruby-identifier">game</span> <span class="ruby-identifier">events</span> <span class="ruby-identifier">model</span>
+</pre>
+
+<p>It is in charge of the different events taking place</p>
+
   </section>
 
   
@@ -204,10 +209,10 @@
 
           
           <div class="method-source-code" id="available_decisions-source">
-            <pre><span class="ruby-comment"># File app/models/event.rb, line 37</span>
+            <pre><span class="ruby-comment"># File app/models/event.rb, line 39</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">available_decisions</span>
   <span class="ruby-identifier">decisions</span>.<span class="ruby-identifier">select</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">d</span><span class="ruby-operator">|</span>
-    <span class="ruby-identifier">d</span>.<span class="ruby-identifier">made_at</span> <span class="ruby-operator">==</span> <span class="ruby-keyword">nil</span>
+    <span class="ruby-identifier">d</span>.<span class="ruby-identifier">made_at</span>.<span class="ruby-identifier">nil?</span>
   <span class="ruby-keyword">end</span>
 <span class="ruby-keyword">end</span></pre>
           </div>
@@ -242,10 +247,10 @@
 
           
           <div class="method-source-code" id="decisions-source">
-            <pre><span class="ruby-comment"># File app/models/event.rb, line 21</span>
+            <pre><span class="ruby-comment"># File app/models/event.rb, line 23</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">decisions</span>
   <span class="ruby-constant">CodeWars</span><span class="ruby-operator">::</span><span class="ruby-constant">DataStore</span>.<span class="ruby-identifier">instance</span>.<span class="ruby-identifier">decisions</span>.<span class="ruby-identifier">select</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">d</span><span class="ruby-operator">|</span>
-    <span class="ruby-identifier">d</span>.<span class="ruby-identifier">decided_event_slug</span> <span class="ruby-operator">==</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">slug</span>
+    <span class="ruby-identifier">d</span>.<span class="ruby-identifier">decided_event_slug</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">slug</span>
   <span class="ruby-keyword">end</span>
 <span class="ruby-keyword">end</span></pre>
           </div>
@@ -280,10 +285,10 @@
 
           
           <div class="method-source-code" id="decisions_made-source">
-            <pre><span class="ruby-comment"># File app/models/event.rb, line 29</span>
+            <pre><span class="ruby-comment"># File app/models/event.rb, line 31</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">decisions_made</span>
-  <span class="ruby-identifier">decisions</span>.<span class="ruby-identifier">select</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">d</span><span class="ruby-operator">|</span>
-    <span class="ruby-identifier">d</span>.<span class="ruby-identifier">made_at</span> <span class="ruby-operator">!=</span> <span class="ruby-keyword">nil</span>
+  <span class="ruby-identifier">decisions</span>.<span class="ruby-identifier">reject</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">d</span><span class="ruby-operator">|</span>
+    <span class="ruby-identifier">d</span>.<span class="ruby-identifier">made_at</span>.<span class="ruby-identifier">nil?</span>
   <span class="ruby-keyword">end</span>
 <span class="ruby-keyword">end</span></pre>
           </div>
@@ -318,60 +323,10 @@
 
           
           <div class="method-source-code" id="has_a_player_attribute_decision-3F-source">
-            <pre><span class="ruby-comment"># File app/models/event.rb, line 46</span>
+            <pre><span class="ruby-comment"># File app/models/event.rb, line 48</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">has_a_player_attribute_decision?</span>
-  <span class="ruby-keyword">self</span>.<span class="ruby-identifier">decisions</span>
-    .<span class="ruby-identifier">select</span>{<span class="ruby-operator">|</span><span class="ruby-identifier">d</span><span class="ruby-operator">|</span> <span class="ruby-identifier">attr</span> = <span class="ruby-identifier">d</span>.<span class="ruby-identifier">current_player_input_attribute</span> <span class="ruby-keyword">and</span> <span class="ruby-identifier">attr</span>.<span class="ruby-identifier">size</span> <span class="ruby-operator">&gt;</span> <span class="ruby-value">0</span>}
-    .<span class="ruby-identifier">size</span> <span class="ruby-operator">&gt;</span> <span class="ruby-value">0</span>
-<span class="ruby-keyword">end</span></pre>
-          </div>
-          
-        </div>
-
-        
-
-        
-      </div>
-
-    
-      <div id="method-i-is_player_input_valid-3F" class="method-detail ">
-        
-        <div class="method-heading">
-          <span class="method-name">is_player_input_valid?</span><span
-            class="method-args">(player_input)</span>
-          
-          <span class="method-click-advice">click to toggle source</span>
-          
-        </div>
-        
-
-        <div class="method-description">
-          
-          <p>Returns wether or not the player input is considered valid</p>
-<ul><li>
-<p>@param [String] player_input</p>
-</li><li>
-<p>@return [Boolean] Wether or not the input is a valid one</p>
-</li></ul>
-          
-          
-
-          
-          <div class="method-source-code" id="is_player_input_valid-3F-source">
-            <pre><span class="ruby-comment"># File app/models/event.rb, line 105</span>
-<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">is_player_input_valid?</span>(<span class="ruby-identifier">player_input</span>)
-  <span class="ruby-identifier">player_input_is_valid</span> = <span class="ruby-keyword">false</span>
-
-  <span class="ruby-keyword">if</span> <span class="ruby-identifier">player_input</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">player_input</span>.<span class="ruby-identifier">size</span> <span class="ruby-operator">&gt;</span> <span class="ruby-value">0</span>
-    <span class="ruby-keyword">if</span> <span class="ruby-identifier">has_a_player_attribute_decision?</span>
-      <span class="ruby-identifier">player_input_is_valid</span> = <span class="ruby-keyword">true</span>
-    <span class="ruby-keyword">else</span> <span class="ruby-identifier">player_input</span> <span class="ruby-keyword">and</span> (<span class="ruby-identifier">player_i</span> = <span class="ruby-identifier">player_input</span>.<span class="ruby-identifier">to_i</span>)
-      <span class="ruby-identifier">player_input_is_valid</span> = (<span class="ruby-identifier">player_i</span> <span class="ruby-operator">&gt;</span> <span class="ruby-value">0</span> <span class="ruby-keyword">and</span>
-        <span class="ruby-identifier">player_i</span> <span class="ruby-operator">&lt;=</span> <span class="ruby-identifier">available_decisions</span>.<span class="ruby-identifier">count</span>)
-    <span class="ruby-keyword">end</span>
-  <span class="ruby-keyword">end</span>
-
-  <span class="ruby-identifier">player_input_is_valid</span>
+  <span class="ruby-operator">!</span><span class="ruby-identifier">decisions</span>
+    .<span class="ruby-identifier">select</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">d</span><span class="ruby-operator">|</span> (<span class="ruby-identifier">attr</span> = <span class="ruby-identifier">d</span>.<span class="ruby-identifier">current_player_input_attribute</span>) <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-operator">!</span><span class="ruby-identifier">attr</span>.<span class="ruby-identifier">empty?</span> }.<span class="ruby-identifier">empty?</span>
 <span class="ruby-keyword">end</span></pre>
           </div>
           
@@ -405,9 +360,58 @@
 
           
           <div class="method-source-code" id="next_event_in_the_list-source">
-            <pre><span class="ruby-comment"># File app/models/event.rb, line 54</span>
+            <pre><span class="ruby-comment"># File app/models/event.rb, line 55</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">next_event_in_the_list</span>
-  <span class="ruby-constant">CodeWars</span><span class="ruby-operator">::</span><span class="ruby-constant">DataStore</span>.<span class="ruby-identifier">instance</span>.<span class="ruby-identifier">data</span>[<span class="ruby-value">:events</span>][<span class="ruby-keyword">self</span>.<span class="ruby-identifier">indexed_at</span> <span class="ruby-operator">+</span> <span class="ruby-value">1</span>]
+  <span class="ruby-constant">CodeWars</span><span class="ruby-operator">::</span><span class="ruby-constant">DataStore</span>.<span class="ruby-identifier">instance</span>.<span class="ruby-identifier">data</span>[<span class="ruby-value">:events</span>][<span class="ruby-identifier">indexed_at</span> <span class="ruby-operator">+</span> <span class="ruby-value">1</span>]
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-player_input_valid-3F" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">player_input_valid?</span><span
+            class="method-args">(player_input)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Returns wether or not the player input is considered valid</p>
+<ul><li>
+<p>@param [String] player_input</p>
+</li><li>
+<p>@return [Boolean] Wether or not the input is a valid one</p>
+</li></ul>
+          
+          
+
+          
+          <div class="method-source-code" id="player_input_valid-3F-source">
+            <pre><span class="ruby-comment"># File app/models/event.rb, line 103</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">player_input_valid?</span>(<span class="ruby-identifier">player_input</span>)
+  <span class="ruby-identifier">player_input_is_valid</span> = <span class="ruby-keyword">false</span>
+
+  <span class="ruby-keyword">if</span> <span class="ruby-identifier">player_input</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-operator">!</span><span class="ruby-identifier">player_input</span>.<span class="ruby-identifier">to_s</span>.<span class="ruby-identifier">empty?</span>
+    <span class="ruby-keyword">if</span> <span class="ruby-identifier">has_a_player_attribute_decision?</span>
+      <span class="ruby-identifier">player_input_is_valid</span> = <span class="ruby-keyword">true</span>
+    <span class="ruby-keyword">elsif</span> <span class="ruby-identifier">player_input</span> <span class="ruby-operator">&amp;&amp;</span> (<span class="ruby-identifier">player_i</span> = <span class="ruby-identifier">player_input</span>.<span class="ruby-identifier">to_i</span>)
+      <span class="ruby-identifier">player_input_is_valid</span> = (<span class="ruby-identifier">player_i</span>.<span class="ruby-identifier">positive?</span> <span class="ruby-operator">&amp;&amp;</span>
+        (<span class="ruby-identifier">player_i</span> <span class="ruby-operator">&lt;=</span> <span class="ruby-identifier">available_decisions</span>.<span class="ruby-identifier">count</span>))
+    <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">end</span>
+
+  <span class="ruby-identifier">player_input_is_valid</span>
 <span class="ruby-keyword">end</span></pre>
           </div>
           
@@ -423,7 +427,7 @@
         
         <div class="method-heading">
           <span class="method-name">resolve_next_event</span><span
-            class="method-args">(current_decision=nil)</span>
+            class="method-args">(current_decision = nil)</span>
           
           <span class="method-click-advice">click to toggle source</span>
           
@@ -443,21 +447,20 @@
 
           
           <div class="method-source-code" id="resolve_next_event-source">
-            <pre><span class="ruby-comment"># File app/models/event.rb, line 72</span>
-<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">resolve_next_event</span>(<span class="ruby-identifier">current_decision</span>=<span class="ruby-keyword">nil</span>)
+            <pre><span class="ruby-comment"># File app/models/event.rb, line 73</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">resolve_next_event</span>(<span class="ruby-identifier">current_decision</span> = <span class="ruby-keyword">nil</span>)
   <span class="ruby-identifier">next_event</span> = <span class="ruby-keyword">nil</span>
 
   <span class="ruby-comment"># if no decisions is attached</span>
   <span class="ruby-comment"># or if this is player_attribute decision related event</span>
   <span class="ruby-comment"># then go through the events list</span>
-  <span class="ruby-keyword">if</span> <span class="ruby-identifier">has_a_player_attribute_decision?</span> <span class="ruby-keyword">or</span>
-    <span class="ruby-identifier">decisions</span>.<span class="ruby-identifier">count</span> <span class="ruby-operator">==</span> <span class="ruby-value">0</span>
+  <span class="ruby-keyword">if</span> <span class="ruby-identifier">has_a_player_attribute_decision?</span> <span class="ruby-operator">||</span> <span class="ruby-identifier">decisions</span>.<span class="ruby-identifier">count</span>.<span class="ruby-identifier">zero?</span>
 
     <span class="ruby-identifier">next_event</span> = <span class="ruby-identifier">static_next_event</span> <span class="ruby-operator">||</span> <span class="ruby-identifier">next_event_in_the_list</span>
 
   <span class="ruby-comment"># if the event is the final boss event</span>
   <span class="ruby-comment"># and the boss is beaten</span>
-  <span class="ruby-keyword">elsif</span> <span class="ruby-identifier">requires_boss_beaten</span> <span class="ruby-keyword">and</span> <span class="ruby-constant">CodeWars</span><span class="ruby-operator">::</span><span class="ruby-constant">DarkCobol</span>.<span class="ruby-identifier">instance</span>.<span class="ruby-identifier">is_beaten?</span>
+  <span class="ruby-keyword">elsif</span> <span class="ruby-identifier">requires_boss_beaten</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-constant">CodeWars</span><span class="ruby-operator">::</span><span class="ruby-constant">DarkCobol</span>.<span class="ruby-identifier">instance</span>.<span class="ruby-identifier">beaten?</span>
     <span class="ruby-identifier">next_event</span> = <span class="ruby-identifier">static_next_event</span>
 
   <span class="ruby-comment"># if there&#39;s a current decision</span>
@@ -465,8 +468,7 @@
     <span class="ruby-identifier">next_event</span> = <span class="ruby-identifier">current_decision</span>.<span class="ruby-identifier">next_event</span>
 
   <span class="ruby-comment"># if the event requires all decisions to be made</span>
-  <span class="ruby-keyword">elsif</span> <span class="ruby-identifier">requires_all_decisions</span> <span class="ruby-keyword">and</span>
-    <span class="ruby-identifier">available_decisions</span>.<span class="ruby-identifier">count</span> <span class="ruby-operator">==</span> <span class="ruby-value">0</span>
+  <span class="ruby-keyword">elsif</span> <span class="ruby-identifier">requires_all_decisions</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">available_decisions</span>.<span class="ruby-identifier">count</span>.<span class="ruby-identifier">zero?</span>
     <span class="ruby-identifier">next_event</span> = <span class="ruby-identifier">static_next_event</span>
   <span class="ruby-keyword">end</span>
 
@@ -504,12 +506,12 @@
 
           
           <div class="method-source-code" id="static_next_event-source">
-            <pre><span class="ruby-comment"># File app/models/event.rb, line 61</span>
+            <pre><span class="ruby-comment"># File app/models/event.rb, line 62</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">static_next_event</span>
-  <span class="ruby-keyword">if</span> <span class="ruby-identifier">next_event_slug</span> <span class="ruby-keyword">and</span> <span class="ruby-identifier">next_event_slug</span>.<span class="ruby-identifier">size</span> <span class="ruby-operator">&gt;</span> <span class="ruby-value">0</span>
-    <span class="ruby-constant">CodeWars</span><span class="ruby-operator">::</span><span class="ruby-constant">DataStore</span>.<span class="ruby-identifier">instance</span>.<span class="ruby-identifier">data</span>[<span class="ruby-value">:events</span>]
-      .<span class="ruby-identifier">select</span>{<span class="ruby-operator">|</span><span class="ruby-identifier">e</span><span class="ruby-operator">|</span> <span class="ruby-identifier">e</span>.<span class="ruby-identifier">slug</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">next_event_slug</span>}.<span class="ruby-identifier">first</span>
-  <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">return</span> <span class="ruby-keyword">unless</span> <span class="ruby-identifier">next_event_slug</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-operator">!</span><span class="ruby-identifier">next_event_slug</span>.<span class="ruby-identifier">empty?</span>
+
+  <span class="ruby-constant">CodeWars</span><span class="ruby-operator">::</span><span class="ruby-constant">DataStore</span>.<span class="ruby-identifier">instance</span>.<span class="ruby-identifier">data</span>[<span class="ruby-value">:events</span>]
+                     .<span class="ruby-identifier">select</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">e</span><span class="ruby-operator">|</span> <span class="ruby-identifier">e</span>.<span class="ruby-identifier">slug</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">next_event_slug</span> }.<span class="ruby-identifier">first</span>
 <span class="ruby-keyword">end</span></pre>
           </div>
           

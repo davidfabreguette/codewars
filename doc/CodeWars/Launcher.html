@@ -87,11 +87,19 @@
     
     <li ><a href="#method-c-disable_auto_start-21">::disable_auto_start!</a>
     
+    <li ><a href="#method-c-load_all_files">::load_all_files</a>
+    
     <li ><a href="#method-c-new">::new</a>
+    
+    <li ><a href="#method-i-ask_player_to_make_decision">#ask_player_to_make_decision</a>
+    
+    <li ><a href="#method-i-display_error_messages">#display_error_messages</a>
     
     <li ><a href="#method-i-launch">#launch</a>
     
     <li ><a href="#method-i-start">#start</a>
+    
+    <li ><a href="#method-i-welcome">#welcome</a>
     
   </ul>
 </div>
@@ -166,9 +174,44 @@
 
           
           <div class="method-source-code" id="disable_auto_start-21-source">
-            <pre><span class="ruby-comment"># File lib/launcher.rb, line 33</span>
+            <pre><span class="ruby-comment"># File lib/launcher.rb, line 30</span>
 <span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier ruby-title">disable_auto_start!</span>
   <span class="ruby-identifier">@@auto_start_enabled</span> = <span class="ruby-keyword">false</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-c-load_all_files" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">load_all_files</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Loads all needed files for the game</p>
+          
+          
+
+          
+          <div class="method-source-code" id="load_all_files-source">
+            <pre><span class="ruby-comment"># File lib/launcher.rb, line 176</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier ruby-title">load_all_files</span>
+  <span class="ruby-constant">DIRS_TO_LOAD</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">dir_to_load</span><span class="ruby-operator">|</span>
+    <span class="ruby-identifier">require_all</span> <span class="ruby-node">&quot;./app/#{dir_to_load}&quot;</span>
+  <span class="ruby-keyword">end</span>
 <span class="ruby-keyword">end</span></pre>
           </div>
           
@@ -201,16 +244,13 @@
           <div class="method-source-code" id="new-source">
             <pre><span class="ruby-comment"># File lib/launcher.rb, line 17</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">initialize</span>
-
   <span class="ruby-keyword">self</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">load_all_files</span>
 
   <span class="ruby-constant">CodeWars</span><span class="ruby-operator">::</span><span class="ruby-constant">DataStore</span>.<span class="ruby-identifier">instance</span>
 
   <span class="ruby-identifier">require</span> <span class="ruby-string">&#39;readline&#39;</span>
 
-  <span class="ruby-keyword">if</span> <span class="ruby-identifier">@@auto_start_enabled</span>
-    <span class="ruby-identifier">start</span>
-  <span class="ruby-keyword">end</span>
+  <span class="ruby-identifier">start</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">@@auto_start_enabled</span>
 <span class="ruby-keyword">end</span></pre>
           </div>
           
@@ -230,11 +270,150 @@
        </header>
 
     
+      <div id="method-i-ask_player_to_make_decision" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">ask_player_to_make_decision</span><span
+            class="method-args">(event)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>This methods :</p>
+<ul><li>
+<p>shows the player available decisions</p>
+</li><li>
+<p>asks the player to choose the decision</p>
+</li><li>
+<p>(and prevents from entering something else !)</p>
+</li><li>
+<p>stores any player attribute if applyable</p>
+</li></ul>
+
+<p>@param [Event] event from which decisions are pulled off @return [Decision, Boolean] any chosen decision by player</p>
+          
+          
+
+          
+          <div class="method-source-code" id="ask_player_to_make_decision-source">
+            <pre><span class="ruby-comment"># File lib/launcher.rb, line 105</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">ask_player_to_make_decision</span>(<span class="ruby-identifier">event</span>)
+  <span class="ruby-identifier">selected_decision</span> = <span class="ruby-keyword">nil</span>
+  <span class="ruby-identifier">player_input_is_valid</span> = <span class="ruby-keyword">false</span>
+
+  <span class="ruby-comment"># Extracts available (non-already made) decisions</span>
+  <span class="ruby-identifier">available_decisions</span> = <span class="ruby-identifier">event</span>.<span class="ruby-identifier">available_decisions</span>
+
+  <span class="ruby-comment"># Show decisions choices to player</span>
+  <span class="ruby-keyword">return</span> <span class="ruby-keyword">unless</span> <span class="ruby-identifier">available_decisions</span>.<span class="ruby-identifier">count</span>.<span class="ruby-identifier">positive?</span>
+
+  <span class="ruby-identifier">player_attribute_decision</span> = <span class="ruby-keyword">nil</span> <span class="ruby-comment"># store as a cache value any attribute decision</span>
+
+  <span class="ruby-comment"># If this is &quot;player attribute&quot; decision</span>
+  <span class="ruby-comment"># Then no need to loop over</span>
+  <span class="ruby-keyword">if</span> <span class="ruby-identifier">event</span>.<span class="ruby-identifier">has_a_player_attribute_decision?</span>
+    <span class="ruby-identifier">player_attribute_decision</span> = <span class="ruby-identifier">event</span>.<span class="ruby-identifier">decisions</span>.<span class="ruby-identifier">first</span>
+  <span class="ruby-keyword">else</span>
+    <span class="ruby-identifier">available_decisions</span>.<span class="ruby-identifier">each_with_index</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">decision</span>, <span class="ruby-identifier">i</span><span class="ruby-operator">|</span>
+      <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;#{i + 1}/ #{decision.custom_label}&quot;</span>
+    <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">end</span>
+
+  <span class="ruby-keyword">unless</span> <span class="ruby-identifier">event</span>.<span class="ruby-identifier">has_a_player_attribute_decision?</span>
+    <span class="ruby-identifier">puts</span> <span class="ruby-string">&#39;--&gt; Press the number of your choice below :&#39;</span>.<span class="ruby-identifier">colorize</span>(<span class="ruby-value">:yellow</span>)
+  <span class="ruby-keyword">end</span>
+
+  <span class="ruby-identifier">max_attempts</span> = <span class="ruby-value">3</span> <span class="ruby-comment"># we allow only 3 attempts - the game will stop if no decision is made</span>
+  <span class="ruby-identifier">attempts</span> = <span class="ruby-value">0</span>
+  <span class="ruby-keyword">while</span> <span class="ruby-operator">!</span><span class="ruby-identifier">player_input_is_valid</span> <span class="ruby-operator">&amp;&amp;</span> (<span class="ruby-identifier">attempts</span> <span class="ruby-operator">&lt;</span> <span class="ruby-identifier">max_attempts</span>)
+    <span class="ruby-identifier">player_input</span> = <span class="ruby-constant">Readline</span>.<span class="ruby-identifier">readline</span>(<span class="ruby-string">&#39;❞ &gt;&#39;</span>, <span class="ruby-keyword">true</span>)
+    <span class="ruby-identifier">attempts</span> <span class="ruby-operator">+=</span> <span class="ruby-value">1</span>
+    <span class="ruby-identifier">player_input_is_valid</span> = <span class="ruby-identifier">event</span>.<span class="ruby-identifier">player_input_valid?</span>(<span class="ruby-identifier">player_input</span>)
+
+    <span class="ruby-keyword">unless</span> <span class="ruby-identifier">player_input_is_valid</span>
+      <span class="ruby-identifier">display_error_messages</span>((<span class="ruby-identifier">attempts</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">max_attempts</span>),
+                             <span class="ruby-operator">!</span><span class="ruby-identifier">event</span>.<span class="ruby-identifier">has_a_player_attribute_decision?</span>)
+    <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">end</span>
+
+  <span class="ruby-keyword">if</span> <span class="ruby-identifier">player_input_is_valid</span>
+    <span class="ruby-identifier">puts</span> <span class="ruby-string">&#39;|&#39;</span>
+    <span class="ruby-identifier">puts</span> <span class="ruby-string">&#39;|&#39;</span>
+    <span class="ruby-identifier">puts</span> <span class="ruby-string">&#39;|&#39;</span>
+    <span class="ruby-identifier">puts</span> <span class="ruby-string">&#39;-&gt;&#39;</span>
+    <span class="ruby-identifier">player_attribute_decision</span>&amp;.<span class="ruby-identifier">update_player</span>(<span class="ruby-identifier">player_input</span>)
+
+    <span class="ruby-comment"># Find selected decision</span>
+    <span class="ruby-identifier">selected_decision</span> = <span class="ruby-identifier">available_decisions</span>[<span class="ruby-identifier">player_input</span>.<span class="ruby-identifier">to_i</span> <span class="ruby-operator">-</span> <span class="ruby-value">1</span>]
+  <span class="ruby-keyword">end</span>
+
+  [<span class="ruby-identifier">selected_decision</span>, <span class="ruby-identifier">player_input_is_valid</span>]
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-display_error_messages" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">display_error_messages</span><span
+            class="method-args">(has_exceeded_attempts, is_a_numbered_input)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Shows display error messages</p>
+<ul><li>
+<p>@param [Boolean] has_exceeded_attempts</p>
+</li><li>
+<p>@param [Boolean] is_a_numbered_input</p>
+</li></ul>
+          
+          
+
+          
+          <div class="method-source-code" id="display_error_messages-source">
+            <pre><span class="ruby-comment"># File lib/launcher.rb, line 161</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">display_error_messages</span>(<span class="ruby-identifier">has_exceeded_attempts</span>, <span class="ruby-identifier">is_a_numbered_input</span>)
+  <span class="ruby-keyword">if</span> <span class="ruby-operator">!</span><span class="ruby-identifier">has_exceeded_attempts</span>
+    <span class="ruby-keyword">if</span> <span class="ruby-identifier">is_a_numbered_input</span>
+      <span class="ruby-identifier">puts</span> <span class="ruby-string">&#39;Please choose a valid number&#39;</span>
+    <span class="ruby-keyword">else</span>
+      <span class="ruby-identifier">puts</span> <span class="ruby-string">&#39;Please enter something !&#39;</span>
+    <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">else</span>
+    <span class="ruby-identifier">puts</span> <span class="ruby-string">&#39;Alright - game is over |o| ...&#39;</span>
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
       <div id="method-i-launch" class="method-detail ">
         
         <div class="method-heading">
           <span class="method-name">launch</span><span
-            class="method-args">(event, from_decision=nil)</span>
+            class="method-args">(event, from_decision = nil)</span>
           
           <span class="method-click-advice">click to toggle source</span>
           
@@ -256,42 +435,39 @@
 
           
           <div class="method-source-code" id="launch-source">
-            <pre><span class="ruby-comment"># File lib/launcher.rb, line 52</span>
-<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">launch</span>(<span class="ruby-identifier">event</span>, <span class="ruby-identifier">from_decision</span>=<span class="ruby-keyword">nil</span>)
-
-  <span class="ruby-identifier">end_game_label</span> = <span class="ruby-string">&quot;Bye bye Jedi !&quot;</span>
+            <pre><span class="ruby-comment"># File lib/launcher.rb, line 49</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">launch</span>(<span class="ruby-identifier">event</span>, <span class="ruby-identifier">from_decision</span> = <span class="ruby-keyword">nil</span>)
+  <span class="ruby-identifier">end_game_label</span> = <span class="ruby-string">&#39;Bye bye Jedi !&#39;</span>
 
   <span class="ruby-comment"># Shows event label</span>
   <span class="ruby-comment"># unless this is a &quot;require all decisions&quot; event and</span>
   <span class="ruby-comment"># all decisions have already been chosen !</span>
-  <span class="ruby-keyword">unless</span> <span class="ruby-identifier">event</span>.<span class="ruby-identifier">available_decisions</span>.<span class="ruby-identifier">count</span> <span class="ruby-operator">==</span> <span class="ruby-value">0</span> <span class="ruby-keyword">and</span>
-    <span class="ruby-identifier">event</span>.<span class="ruby-identifier">requires_all_decisions</span>
-    <span class="ruby-identifier">puts</span> <span class="ruby-string">&quot;.&quot;</span>.<span class="ruby-identifier">colorize</span>(<span class="ruby-value">:red</span>)
+  <span class="ruby-keyword">unless</span> <span class="ruby-identifier">event</span>.<span class="ruby-identifier">available_decisions</span>.<span class="ruby-identifier">count</span>.<span class="ruby-identifier">zero?</span> <span class="ruby-operator">&amp;&amp;</span>
+         <span class="ruby-identifier">event</span>.<span class="ruby-identifier">requires_all_decisions</span>
+    <span class="ruby-identifier">puts</span> <span class="ruby-string">&#39;.&#39;</span>.<span class="ruby-identifier">colorize</span>(<span class="ruby-value">:red</span>)
     <span class="ruby-identifier">puts</span> <span class="ruby-identifier">event</span>.<span class="ruby-identifier">custom_label</span>.<span class="ruby-identifier">colorize</span>(<span class="ruby-value">:yellow</span>)
   <span class="ruby-keyword">end</span>
 
   <span class="ruby-comment"># Mark the decision as &quot;made&quot;</span>
   <span class="ruby-comment"># We consider the decision as &quot;made&quot; once the event it leads to</span>
   <span class="ruby-comment"># has been displayed on screen</span>
-  <span class="ruby-keyword">if</span> <span class="ruby-identifier">from_decision</span>
-    <span class="ruby-identifier">from_decision</span>.<span class="ruby-identifier">made_at</span> = <span class="ruby-constant">Time</span>.<span class="ruby-identifier">now</span>
-  <span class="ruby-keyword">end</span>
+  <span class="ruby-identifier">from_decision</span>.<span class="ruby-identifier">made_at</span> = <span class="ruby-constant">Time</span>.<span class="ruby-identifier">now</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">from_decision</span>
 
   <span class="ruby-identifier">selected_decision</span>, <span class="ruby-identifier">input_was_invalid</span> = <span class="ruby-identifier">ask_player_to_make_decision</span>(<span class="ruby-identifier">event</span>)
 
-  <span class="ruby-keyword">if</span> <span class="ruby-operator">!</span><span class="ruby-identifier">selected_decision</span> <span class="ruby-keyword">and</span> <span class="ruby-identifier">input_was_invalid</span>
+  <span class="ruby-keyword">if</span> <span class="ruby-operator">!</span><span class="ruby-identifier">selected_decision</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">input_was_invalid</span>
     <span class="ruby-identifier">puts</span> <span class="ruby-identifier">end_game_label</span>.<span class="ruby-identifier">colorize</span>(<span class="ruby-value">:yellow</span>)
     <span class="ruby-keyword">return</span>
   <span class="ruby-keyword">end</span>
 
-  <span class="ruby-keyword">if</span> <span class="ruby-identifier">event</span>.<span class="ruby-identifier">requires_boss_beaten</span> <span class="ruby-keyword">and</span>
-    <span class="ruby-identifier">selected_decision</span>.<span class="ruby-identifier">life_points</span> <span class="ruby-keyword">and</span> <span class="ruby-identifier">selected_decision</span>.<span class="ruby-identifier">life_points</span>.<span class="ruby-identifier">to_i</span> <span class="ruby-operator">&gt;</span> <span class="ruby-value">0</span>
+  <span class="ruby-keyword">if</span> <span class="ruby-identifier">event</span>.<span class="ruby-identifier">requires_boss_beaten</span> <span class="ruby-operator">&amp;&amp;</span>
+     <span class="ruby-identifier">selected_decision</span>.<span class="ruby-identifier">life_points</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">selected_decision</span>.<span class="ruby-identifier">life_points</span>.<span class="ruby-identifier">to_i</span>.<span class="ruby-identifier">positive?</span>
 
     <span class="ruby-constant">CodeWars</span><span class="ruby-operator">::</span><span class="ruby-constant">DarkCobol</span>.<span class="ruby-identifier">instance</span>.<span class="ruby-identifier">attack!</span>(<span class="ruby-identifier">selected_decision</span>.<span class="ruby-identifier">life_points</span>)
     <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;&gt; Dark Cobol life status : (#{CodeWars::DarkCobol.instance.life_points}/20)&quot;</span>
   <span class="ruby-keyword">end</span>
 
-  <span class="ruby-keyword">if</span> <span class="ruby-identifier">next_event</span> = <span class="ruby-identifier">event</span>.<span class="ruby-identifier">resolve_next_event</span>(<span class="ruby-identifier">selected_decision</span>)
+  <span class="ruby-keyword">if</span> (<span class="ruby-identifier">next_event</span> = <span class="ruby-identifier">event</span>.<span class="ruby-identifier">resolve_next_event</span>(<span class="ruby-identifier">selected_decision</span>))
     <span class="ruby-keyword">if</span> <span class="ruby-identifier">event</span>.<span class="ruby-identifier">requires_boss_beaten</span>
       <span class="ruby-identifier">selected_decision</span> = <span class="ruby-keyword">nil</span> <span class="ruby-comment"># we prevent sending decision back in to prevent it from being &quot;made&quot;</span>
     <span class="ruby-keyword">end</span>
@@ -329,7 +505,7 @@
 
           
           <div class="method-source-code" id="start-source">
-            <pre><span class="ruby-comment"># File lib/launcher.rb, line 38</span>
+            <pre><span class="ruby-comment"># File lib/launcher.rb, line 35</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">start</span>
   <span class="ruby-comment"># Show the welcome section</span>
   <span class="ruby-identifier">welcome</span>
@@ -337,6 +513,42 @@
   <span class="ruby-comment"># Get the first event</span>
   <span class="ruby-identifier">event</span> = <span class="ruby-constant">CodeWars</span><span class="ruby-operator">::</span><span class="ruby-constant">DataStore</span>.<span class="ruby-identifier">instance</span>.<span class="ruby-identifier">events</span>.<span class="ruby-identifier">first</span>
   <span class="ruby-identifier">launch</span>(<span class="ruby-identifier">event</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-welcome" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">welcome</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Shows the game logo &amp; welcome text</p>
+          
+          
+
+          
+          <div class="method-source-code" id="welcome-source">
+            <pre><span class="ruby-comment"># File lib/launcher.rb, line 91</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">welcome</span>
+  <span class="ruby-identifier">logo</span> = <span class="ruby-constant">File</span>.<span class="ruby-identifier">read</span>(<span class="ruby-string">&#39;app/assets/logo.txt&#39;</span>)
+  <span class="ruby-identifier">print</span> <span class="ruby-identifier">logo</span>
+
+  <span class="ruby-identifier">puts</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">class</span><span class="ruby-operator">::</span><span class="ruby-constant">WELCOME_TEXT</span>
 <span class="ruby-keyword">end</span></pre>
           </div>
           

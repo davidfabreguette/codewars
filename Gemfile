@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
-gem 'require_all'
 gem 'colorize'
-gem 'rubocop', require: false
+gem 'require_all'
 gem 'rspec'
+gem 'rubocop', require: false
 gem 'rdoc'

@@ -1,2 +1,2 @@
-require "./lib/launcher"
+require './lib/launcher'
 CodeWars::Launcher.instance

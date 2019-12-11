@@ -32,8 +32,7 @@ RSpec.describe 'Launcher' do
   end
 
   describe '#welcome' do
-    it 'displays logo and welcome text' do
-      logo = File.read('app/assets/logo.txt')
+    it 'displays welcome text' do
       launcher = nil
 
       # Disable console outputs temporarily
@@ -45,7 +44,7 @@ RSpec.describe 'Launcher' do
       # Checks console output
       expect do
         launcher = launcher.send(:welcome)
-      end.to output(/#{logo + CodeWars::Launcher::WELCOME_TEXT}/).to_stdout
+      end.to output(/#{CodeWars::Launcher::WELCOME_TEXT}/).to_stdout
     end
   end
 

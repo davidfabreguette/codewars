@@ -11,12 +11,12 @@ module CodeWars
       self.life_points ||= 20
     end
 
-    # @return [Boolean]
+    # - @return [Boolean]
     def is_beaten?
       life_points == 0
     end
 
-    # @return [Integer] life_points
+    # - @return [Integer] life_points
     def attack!(life_points_attack)
       self.life_points -= life_points_attack
       if self.life_points < 0

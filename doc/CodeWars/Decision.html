@@ -68,7 +68,19 @@
 
     
     
+    <!-- Method Quickref -->
+<div id="method-list-section" class="nav-section">
+  <h3>Methods</h3>
+
+  <ul class="link-list" role="directory">
     
+    <li ><a href="#method-i-next_event">#next_event</a>
+    
+    <li ><a href="#method-i-update_player">#update_player</a>
+    
+  </ul>
+</div>
+
   </div>
 </nav>
 
@@ -135,15 +147,41 @@
         </div>
       </div>
       
-      <div id="attribute-i-leading_event_slug" class="method-detail">
+      <div id="attribute-i-life_points" class="method-detail">
         <div class="method-heading attribute-method-heading">
-          <span class="method-name">leading_event_slug</span><span
+          <span class="method-name">life_points</span><span
             class="attribute-access-type">[RW]</span>
         </div>
 
         <div class="method-description">
         
-        <p>OPTIONAL The event slug which the decision will lead to If left empty, decision will lead to next event …</p>
+        <p>OPTIONAL IF set - defines life points attack in a final boss fight</p>
+        
+        </div>
+      </div>
+      
+      <div id="attribute-i-made_at" class="method-detail">
+        <div class="method-heading attribute-method-heading">
+          <span class="method-name">made_at</span><span
+            class="attribute-access-type">[RW]</span>
+        </div>
+
+        <div class="method-description">
+        
+        <p>Stores the time at which the decision was made by player</p>
+        
+        </div>
+      </div>
+      
+      <div id="attribute-i-next_event_slug" class="method-detail">
+        <div class="method-heading attribute-method-heading">
+          <span class="method-name">next_event_slug</span><span
+            class="attribute-access-type">[RW]</span>
+        </div>
+
+        <div class="method-description">
+        
+        <p>OPTIONAL The event slug which the decision will lead to If left empty, decision will lead to raw static next event Be aware this attribute can be overidden by events#next_event_slug see events#next_event_slug comment</p>
         
         </div>
       </div>
@@ -152,6 +190,101 @@
     
 
     
+     <section id="public-instance-5Buntitled-5D-method-details" class="method-section">
+       <header>
+         <h3>Public Instance Methods</h3>
+       </header>
+
+    
+      <div id="method-i-next_event" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">next_event</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <ul><li>
+<p>@return [Event] next event saved in store</p>
+</li></ul>
+          
+          
+
+          
+          <div class="method-source-code" id="next_event-source">
+            <pre><span class="ruby-comment"># File app/models/decision.rb, line 40</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">next_event</span>
+  <span class="ruby-keyword">if</span> <span class="ruby-identifier">next_event_slug</span>
+    <span class="ruby-keyword">case</span> <span class="ruby-identifier">next_event_slug</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">to_s</span>
+    <span class="ruby-keyword">when</span> <span class="ruby-string">&quot;String&quot;</span>
+      <span class="ruby-constant">CodeWars</span><span class="ruby-operator">::</span><span class="ruby-constant">DataStore</span>.<span class="ruby-identifier">instance</span>.<span class="ruby-identifier">events</span>
+        .<span class="ruby-identifier">select</span>{<span class="ruby-operator">|</span><span class="ruby-identifier">e</span><span class="ruby-operator">|</span> <span class="ruby-identifier">e</span>.<span class="ruby-identifier">slug</span> <span class="ruby-operator">==</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">next_event_slug</span>}.<span class="ruby-identifier">first</span>
+    <span class="ruby-keyword">when</span> <span class="ruby-string">&quot;Array&quot;</span>
+      <span class="ruby-identifier">sample_index</span> = <span class="ruby-identifier">rand</span>(<span class="ruby-identifier">next_event_slug</span>.<span class="ruby-identifier">size</span>)
+      <span class="ruby-constant">CodeWars</span><span class="ruby-operator">::</span><span class="ruby-constant">DataStore</span>.<span class="ruby-identifier">instance</span>.<span class="ruby-identifier">events</span>
+        .<span class="ruby-identifier">select</span>{<span class="ruby-operator">|</span><span class="ruby-identifier">e</span><span class="ruby-operator">|</span> <span class="ruby-identifier">e</span>.<span class="ruby-identifier">slug</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">next_event_slug</span>[<span class="ruby-identifier">sample_index</span>]}.<span class="ruby-identifier">first</span>
+    <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-update_player" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">update_player</span><span
+            class="method-args">(player_input)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>This methods updates <a href="Decision.html#attribute-i-current_player_input_attribute"><code>current_player_input_attribute</code></a> player attribute with given</p>
+<ul><li>
+<p>@param [String] player_input</p>
+</li><li>
+<p>@return [Player]</p>
+</li></ul>
+          
+          
+
+          
+          <div class="method-source-code" id="update_player-source">
+            <pre><span class="ruby-comment"># File app/models/decision.rb, line 31</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">update_player</span>(<span class="ruby-identifier">player_input</span>)
+  <span class="ruby-keyword">if</span> <span class="ruby-constant">CodeWars</span><span class="ruby-operator">::</span><span class="ruby-constant">Player</span>.<span class="ruby-identifier">instance</span>.<span class="ruby-identifier">respond_to?</span> <span class="ruby-identifier">current_player_input_attribute</span>
+    <span class="ruby-constant">CodeWars</span><span class="ruby-operator">::</span><span class="ruby-constant">Player</span>.<span class="ruby-identifier">instance</span>.<span class="ruby-identifier">update</span>({
+      <span class="ruby-identifier">current_player_input_attribute</span> <span class="ruby-operator">=&gt;</span> <span class="ruby-identifier">player_input</span>
+    })
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+    </section>
+  
   </section>
 </main>
 

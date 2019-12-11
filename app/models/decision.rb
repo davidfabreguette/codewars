@@ -26,8 +26,8 @@ module CodeWars
 
     # This methods updates #current_player_input_attribute player attribute
     # with given
-    # @param [String] player_input
-    # @return [Player]
+    # - @param [String] player_input
+    # - @return [Player]
     def update_player(player_input)
       if CodeWars::Player.instance.respond_to? current_player_input_attribute
         CodeWars::Player.instance.update({
@@ -36,7 +36,7 @@ module CodeWars
       end
     end
 
-    # @return [Event] next event saved in store
+    # - @return [Event] next event saved in store
     def next_event
       if next_event_slug
         case next_event_slug.class.to_s

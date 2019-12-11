@@ -76,6 +76,10 @@
     
     <li ><a href="#method-c-new">::new</a>
     
+    <li ><a href="#method-i-custom_label">#custom_label</a>
+    
+    <li ><a href="#method-i-data_store_name">#data_store_name</a>
+    
     <li ><a href="#method-i-load_attributes">#load_attributes</a>
     
   </ul>
@@ -201,6 +205,81 @@
        </header>
 
     
+      <div id="method-i-custom_label" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">custom_label</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>FIXME : Move this to an included shared “conern” class ! Make any “label field” customized with Player&#39;s name based on meta field “#me#”</p>
+<ul><li>
+<p>@return [String]</p>
+</li></ul>
+          
+          
+
+          
+          <div class="method-source-code" id="custom_label-source">
+            <pre><span class="ruby-comment"># File app/models/code_wars_model.rb, line 45</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">custom_label</span>
+  <span class="ruby-keyword">if</span> <span class="ruby-identifier">respond_to?</span>(<span class="ruby-value">:label</span>) <span class="ruby-keyword">and</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">label</span>
+    <span class="ruby-keyword">self</span>.<span class="ruby-identifier">label</span>.<span class="ruby-identifier">gsub</span>(<span class="ruby-string">&quot;#ME#&quot;</span>, <span class="ruby-constant">CodeWars</span><span class="ruby-operator">::</span><span class="ruby-constant">Player</span>.<span class="ruby-identifier">instance</span>.<span class="ruby-identifier">name</span> <span class="ruby-operator">||</span> <span class="ruby-string">&quot;&quot;</span>)
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-data_store_name" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">data_store_name</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Returns the data store instance name (underscored, pluralized, symoblized)</p>
+<ul><li>
+<p>@return [String]</p>
+</li></ul>
+          
+          
+
+          
+          <div class="method-source-code" id="data_store_name-source">
+            <pre><span class="ruby-comment"># File app/models/code_wars_model.rb, line 35</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">data_store_name</span>
+  <span class="ruby-comment"># We remove module prefix from the equation</span>
+  <span class="ruby-keyword">self</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">to_s</span>.<span class="ruby-identifier">underscore</span>.<span class="ruby-identifier">gsub</span>(<span class="ruby-regexp">/^code_wars\//</span>, <span class="ruby-string">&quot;&quot;</span>).<span class="ruby-identifier">pluralize</span>.<span class="ruby-identifier">to_sym</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
       <div id="method-i-load_attributes" class="method-detail ">
         
         <div class="method-heading">
@@ -214,7 +293,10 @@
 
         <div class="method-description">
           
-          <p>Loads hash attributes to instance attributes @param <a href="../Hash.html"><code>Hash</code></a> data to load</p>
+          <p>Loads hash attributes to instance attributes</p>
+<ul><li>
+<p>@param <a href="../Hash.html"><code>Hash</code></a> data to load</p>
+</li></ul>
           
           
 

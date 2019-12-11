@@ -67,6 +67,8 @@
 
   <ul class="link-list" role="directory">
     
+    <li ><a href="#method-i-disable_puts_and_prints">#disable_puts_and_prints</a>
+    
     <li ><a href="#method-i-get_launcher_with_no_output">#get_launcher_with_no_output</a>
     
   </ul>
@@ -101,6 +103,45 @@
        </header>
 
     
+      <div id="method-i-disable_puts_and_prints" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">disable_puts_and_prints</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="disable_puts_and_prints-source">
+            <pre><span class="ruby-comment"># File spec/helpers/launcher_helpers.rb, line 13</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">disable_puts_and_prints</span>
+  <span class="ruby-comment"># Disable console outputs temporarily</span>
+  <span class="ruby-constant">RSpec</span><span class="ruby-operator">::</span><span class="ruby-constant">Mocks</span>.<span class="ruby-identifier">with_temporary_scope</span> <span class="ruby-keyword">do</span>
+    <span class="ruby-node">%w(puts print)</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">p_cmd</span><span class="ruby-operator">|</span>
+      <span class="ruby-identifier">allow_any_instance_of</span>(<span class="ruby-constant">CodeWars</span><span class="ruby-operator">::</span><span class="ruby-constant">Launcher</span>).<span class="ruby-identifier">to</span> <span class="ruby-identifier">receive</span>(<span class="ruby-identifier">p_cmd</span>.<span class="ruby-identifier">to_sym</span>)
+      .<span class="ruby-identifier">and_return</span>(<span class="ruby-keyword">true</span>)
+    <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
       <div id="method-i-get_launcher_with_no_output" class="method-detail ">
         
         <div class="method-heading">
@@ -125,10 +166,7 @@
   <span class="ruby-identifier">launcher</span> = <span class="ruby-keyword">nil</span>
   <span class="ruby-comment"># Disable console outputs temporarily</span>
   <span class="ruby-constant">RSpec</span><span class="ruby-operator">::</span><span class="ruby-constant">Mocks</span>.<span class="ruby-identifier">with_temporary_scope</span> <span class="ruby-keyword">do</span>
-    <span class="ruby-node">%w(puts print)</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">p_cmd</span><span class="ruby-operator">|</span>
-      <span class="ruby-identifier">allow_any_instance_of</span>(<span class="ruby-constant">CodeWars</span><span class="ruby-operator">::</span><span class="ruby-constant">Launcher</span>).<span class="ruby-identifier">to</span> <span class="ruby-identifier">receive</span>(<span class="ruby-identifier">p_cmd</span>.<span class="ruby-identifier">to_sym</span>)
-      .<span class="ruby-identifier">and_return</span>(<span class="ruby-keyword">true</span>)
-    <span class="ruby-keyword">end</span>
+    <span class="ruby-constant">CodeWars</span><span class="ruby-operator">::</span><span class="ruby-constant">Launcher</span>.<span class="ruby-identifier">disable_auto_start!</span>
     <span class="ruby-identifier">launcher</span> = <span class="ruby-constant">CodeWars</span><span class="ruby-operator">::</span><span class="ruby-constant">Launcher</span>.<span class="ruby-identifier">instance</span>
   <span class="ruby-keyword">end</span>
 

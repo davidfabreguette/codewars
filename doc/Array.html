@@ -122,12 +122,15 @@
         <div class="method-description">
           
           <p>Missing helpfull rails <a href="Array.html#method-i-deep_symbolize_keys"><code>deep_symbolize_keys</code></a> method in pure ruby Workaround using JSON lib found @ <a href="https://stackoverflow.com/questions/24927653/how-to-elegantly-symbolize-keys-for-a-nested-hash">stackoverflow.com/questions/24927653/how-to-elegantly-symbolize-keys-for-a-nested-hash</a></p>
+<ul><li>
+<p>@return [Array] array with any hash symobilized keys</p>
+</li></ul>
           
           
 
           
           <div class="method-source-code" id="deep_symbolize_keys-source">
-            <pre><span class="ruby-comment"># File app/extensions/array.rb, line 5</span>
+            <pre><span class="ruby-comment"># File app/extensions/array.rb, line 6</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">deep_symbolize_keys</span>
   <span class="ruby-constant">JSON</span>.<span class="ruby-identifier">parse</span>(<span class="ruby-constant">JSON</span>[<span class="ruby-keyword">self</span>], <span class="ruby-value">symbolize_names:</span> <span class="ruby-keyword">true</span>)
 <span class="ruby-keyword">end</span></pre>

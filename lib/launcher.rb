@@ -27,6 +27,9 @@ module CodeWars
       end
     end
 
+    # Prevent from launching the game automatically
+    # Usefull for tests suite !
+    # - @return [Boolean]
     def self.disable_auto_start!
       @@auto_start_enabled = false
     end
@@ -42,11 +45,10 @@ module CodeWars
     end
 
     # Launches the events on the screen
-    # Recursive method accepting two params :
-    # @param [Event] event The event to be launched on screen
-    # @param [Decision] from_decision The decision that orginaly
-    # launched the event
-    # @return [Event] Next event to be launched on screen
+    # Recursive method accepting two params
+    # - @param [Event] event The event to be launched on screen
+    # - @param [Decision] from_decision The decision that orginaly launched the event
+    # - @return [Event] Next event to be launched on screen
     def launch(event, from_decision=nil)
 
       end_game_label = "Bye bye Jedi !"
@@ -166,8 +168,8 @@ module CodeWars
     end
 
     # Shows display error messages
-    # @param [Boolean] has_exceeded_attempts
-    # @param [Boolean] is_a_numbered_input
+    # - @param [Boolean] has_exceeded_attempts
+    # - @param [Boolean] is_a_numbered_input
     def display_error_messages(has_exceeded_attempts, is_a_numbered_input)
       if !has_exceeded_attempts
         if is_a_numbered_input
@@ -182,8 +184,8 @@ module CodeWars
 
     DIRS_TO_LOAD = %w(config extensions models)
 
+    # Loads all needed files for the game
     def self.load_all_files
-      # # Make sure to require all module files
       DIRS_TO_LOAD.each do |dir_to_load|
         require_all "./app/#{dir_to_load}"
       end

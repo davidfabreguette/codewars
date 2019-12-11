@@ -32,7 +32,7 @@ module CodeWars
     private
 
     # Loads data yml files in memory in data array attribute
-    # @return [CodeWarsModel]
+    # - @return [CodeWarsModel]
     def seed
       @data = {}
 

@@ -17,7 +17,7 @@ module CodeWars
     attr_accessor :requires_boss_beaten
 
     # Search for any decisions attached to the event
-    # @return [Decision]
+    # - @return [Decision]
     def decisions
       CodeWars::DataStore.instance.decisions.select do |d|
         d.decided_event_slug == self.slug
@@ -25,7 +25,7 @@ module CodeWars
     end
 
     # Returns only attached decisions made
-    # @return [Decision]
+    # - @return [Decision]
     def decisions_made
       decisions.select do |d|
         d.made_at != nil
@@ -33,7 +33,7 @@ module CodeWars
     end
 
     # Returns only attached available (non-made) decisions
-    # @return [Decision]
+    # - @return [Decision]
     def available_decisions
       decisions.select do |d|
         d.made_at == nil
@@ -42,7 +42,7 @@ module CodeWars
 
     # Wether or not the event asks for a player input
     # that will update any of his attribtes (name?)
-    # @return [Boolean]
+    # - @return [Boolean]
     def has_a_player_attribute_decision?
       self.decisions
         .select{|d| attr = d.current_player_input_attribute and attr.size > 0}
@@ -50,14 +50,14 @@ module CodeWars
     end
 
     # Returns next event in the list
-    # @return [Event]
+    # - @return [Event]
     def next_event_in_the_list
       CodeWars::DataStore.instance.data[:events][self.indexed_at + 1]
     end
 
     # Returns the next event saved in store through #next_event_slug
     # based on #next_event_slug attribute
-    # @return [Event]
+    # - @return [Event]
     def static_next_event
       if next_event_slug and next_event_slug.size > 0
         CodeWars::DataStore.instance.data[:events]
@@ -67,8 +67,8 @@ module CodeWars
 
     # This methods is in charge of resolving next event to display based on
     # any current decision the player is making
-    # @params [Decision] Current decision the player is making
-    # @return [Event] The next event to display
+    # - @params [Decision] Current decision the player is making
+    # - @return [Event] The next event to display
     def resolve_next_event(current_decision=nil)
       next_event = nil
 
@@ -100,8 +100,8 @@ module CodeWars
 
 
     # Returns wether or not the player input is considered valid
-    # @param [String] player_input
-    # @return [Boolean] Wether or not the input is a valid one
+    # - @param [String] player_input
+    # - @return [Boolean] Wether or not the input is a valid one
     def is_player_input_valid?(player_input)
       player_input_is_valid = false
 

@@ -44,6 +44,9 @@
     </ul>
   </li>
     <li class="file">
+    <a href="TODOS.html">TODOS</a>
+  </li>
+    <li class="file">
     <a href="app/assets/logo_txt.html">logo</a>
   </li>
   
@@ -59,6 +62,9 @@
   </li>
   <li class="class">
     <a href="CodeWars/CodeWarsModel.html">CodeWars::CodeWarsModel</a>
+  </li>
+  <li class="class">
+    <a href="CodeWars/DarkCobol.html">CodeWars::DarkCobol</a>
   </li>
   <li class="class">
     <a href="CodeWars/DataStore.html">CodeWars::DataStore</a>
@@ -93,9 +99,14 @@
 <ul>
 
   <li class="method">
-    <a href="CodeWars/CodeWarsModel.html#method-c-new">::new</a>
+    <a href="CodeWars/Launcher.html#method-c-disable_auto_start-21">::disable_auto_start!</a>
     &mdash;
-    <span class="container">CodeWars::CodeWarsModel</span>
+    <span class="container">CodeWars::Launcher</span>
+
+  <li class="method">
+    <a href="CodeWars/DarkCobol.html#method-c-new">::new</a>
+    &mdash;
+    <span class="container">CodeWars::DarkCobol</span>
 
   <li class="method">
     <a href="CodeWars/Launcher.html#method-c-new">::new</a>
@@ -108,14 +119,39 @@
     <span class="container">CodeWars::DataStore</span>
 
   <li class="method">
+    <a href="CodeWars/CodeWarsModel.html#method-c-new">::new</a>
+    &mdash;
+    <span class="container">CodeWars::CodeWarsModel</span>
+
+  <li class="method">
+    <a href="CodeWars/DarkCobol.html#method-i-attack-21">#attack!</a>
+    &mdash;
+    <span class="container">CodeWars::DarkCobol</span>
+
+  <li class="method">
+    <a href="CodeWars/Event.html#method-i-available_decisions">#available_decisions</a>
+    &mdash;
+    <span class="container">CodeWars::Event</span>
+
+  <li class="method">
+    <a href="CodeWars/CodeWarsModel.html#method-i-custom_label">#custom_label</a>
+    &mdash;
+    <span class="container">CodeWars::CodeWarsModel</span>
+
+  <li class="method">
+    <a href="CodeWars/CodeWarsModel.html#method-i-data_store_name">#data_store_name</a>
+    &mdash;
+    <span class="container">CodeWars::CodeWarsModel</span>
+
+  <li class="method">
     <a href="CodeWars/Event.html#method-i-decisions">#decisions</a>
     &mdash;
     <span class="container">CodeWars::Event</span>
 
   <li class="method">
-    <a href="Hash.html#method-i-deep_symbolize_keys">#deep_symbolize_keys</a>
+    <a href="CodeWars/Event.html#method-i-decisions_made">#decisions_made</a>
     &mdash;
-    <span class="container">Hash</span>
+    <span class="container">CodeWars::Event</span>
 
   <li class="method">
     <a href="Array.html#method-i-deep_symbolize_keys">#deep_symbolize_keys</a>
@@ -123,14 +159,39 @@
     <span class="container">Array</span>
 
   <li class="method">
+    <a href="Hash.html#method-i-deep_symbolize_keys">#deep_symbolize_keys</a>
+    &mdash;
+    <span class="container">Hash</span>
+
+  <li class="method">
     <a href="CodeWars/DataStore.html#method-i-define_models_getters">#define_models_getters</a>
     &mdash;
     <span class="container">CodeWars::DataStore</span>
 
   <li class="method">
+    <a href="LauncherHelpers.html#method-i-disable_puts_and_prints">#disable_puts_and_prints</a>
+    &mdash;
+    <span class="container">LauncherHelpers</span>
+
+  <li class="method">
     <a href="LauncherHelpers.html#method-i-get_launcher_with_no_output">#get_launcher_with_no_output</a>
     &mdash;
     <span class="container">LauncherHelpers</span>
+
+  <li class="method">
+    <a href="CodeWars/Event.html#method-i-has_a_player_attribute_decision-3F">#has_a_player_attribute_decision?</a>
+    &mdash;
+    <span class="container">CodeWars::Event</span>
+
+  <li class="method">
+    <a href="CodeWars/DarkCobol.html#method-i-is_beaten-3F">#is_beaten?</a>
+    &mdash;
+    <span class="container">CodeWars::DarkCobol</span>
+
+  <li class="method">
+    <a href="CodeWars/Event.html#method-i-is_player_input_valid-3F">#is_player_input_valid?</a>
+    &mdash;
+    <span class="container">CodeWars::Event</span>
 
   <li class="method">
     <a href="CodeWars/Launcher.html#method-i-launch">#launch</a>
@@ -143,7 +204,12 @@
     <span class="container">CodeWars::CodeWarsModel</span>
 
   <li class="method">
-    <a href="CodeWars/Event.html#method-i-next">#next</a>
+    <a href="CodeWars/Decision.html#method-i-next_event">#next_event</a>
+    &mdash;
+    <span class="container">CodeWars::Decision</span>
+
+  <li class="method">
+    <a href="CodeWars/Event.html#method-i-next_event_in_the_list">#next_event_in_the_list</a>
     &mdash;
     <span class="container">CodeWars::Event</span>
 
@@ -153,14 +219,19 @@
     <span class="container">String</span>
 
   <li class="method">
-    <a href="CodeWars/Launcher.html#method-i-resolve_next_event">#resolve_next_event</a>
+    <a href="CodeWars/Event.html#method-i-resolve_next_event">#resolve_next_event</a>
     &mdash;
-    <span class="container">CodeWars::Launcher</span>
+    <span class="container">CodeWars::Event</span>
 
   <li class="method">
     <a href="CodeWars/Launcher.html#method-i-start">#start</a>
     &mdash;
     <span class="container">CodeWars::Launcher</span>
+
+  <li class="method">
+    <a href="CodeWars/Event.html#method-i-static_next_event">#static_next_event</a>
+    &mdash;
+    <span class="container">CodeWars::Event</span>
 
   <li class="method">
     <a href="String.html#method-i-underscore">#underscore</a>
@@ -173,9 +244,9 @@
     <span class="container">CodeWars::Player</span>
 
   <li class="method">
-    <a href="CodeWars/Launcher.html#method-i-welcome">#welcome</a>
+    <a href="CodeWars/Decision.html#method-i-update_player">#update_player</a>
     &mdash;
-    <span class="container">CodeWars::Launcher</span>
+    <span class="container">CodeWars::Decision</span>
 </ul>
 </main>
 

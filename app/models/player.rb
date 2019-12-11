@@ -1,4 +1,4 @@
-require "singleton"
+require 'singleton'
 module CodeWars
   ##
   # This class represents the player
@@ -12,11 +12,10 @@ module CodeWars
     # - @param Hash attributes
     def update(attributes)
       attributes.each do |attribute, value|
-        if self.respond_to? attribute
+        if respond_to? attribute
           CodeWars::Player.instance.send("#{attribute}=", value)
         end
       end
     end
-
   end
 end

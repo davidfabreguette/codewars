@@ -20,15 +20,15 @@ module CodeWars
     # - @return [Decision]
     def decisions
       CodeWars::DataStore.instance.decisions.select do |d|
-        d.decided_event_slug == self.slug
+        d.decided_event_slug == slug
       end
     end
 
     # Returns only attached decisions made
     # - @return [Decision]
     def decisions_made
-      decisions.select do |d|
-        d.made_at != nil
+      decisions.reject do |d|
+        d.made_at.nil?
       end
     end
 
@@ -36,7 +36,7 @@ module CodeWars
     # - @return [Decision]
     def available_decisions
       decisions.select do |d|
-        d.made_at == nil
+        d.made_at.nil?
       end
     end
 
@@ -44,24 +44,23 @@ module CodeWars
     # that will update any of his attribtes (name?)
     # - @return [Boolean]
     def has_a_player_attribute_decision?
-      self.decisions
-        .select{|d| attr = d.current_player_input_attribute and attr.size > 0}
-        .size > 0
+      !decisions
+        .select { |d| (attr = d.current_player_input_attribute) && !attr.empty? }.empty?
     end
 
     # Returns next event in the list
     # - @return [Event]
     def next_event_in_the_list
-      CodeWars::DataStore.instance.data[:events][self.indexed_at + 1]
+      CodeWars::DataStore.instance.data[:events][indexed_at + 1]
     end
 
     # Returns the next event saved in store through #next_event_slug
     # based on #next_event_slug attribute
     # - @return [Event]
     def static_next_event
-      if next_event_slug and next_event_slug.size > 0
+      if next_event_slug && !next_event_slug.empty?
         CodeWars::DataStore.instance.data[:events]
-          .select{|e| e.slug == next_event_slug}.first
+                           .select { |e| e.slug == next_event_slug }.first
       end
     end
 
@@ -69,20 +68,20 @@ module CodeWars
     # any current decision the player is making
     # - @params [Decision] Current decision the player is making
     # - @return [Event] The next event to display
-    def resolve_next_event(current_decision=nil)
+    def resolve_next_event(current_decision = nil)
       next_event = nil
 
       # if no decisions is attached
       # or if this is player_attribute decision related event
       # then go through the events list
-      if has_a_player_attribute_decision? or
-        decisions.count == 0
+      if has_a_player_attribute_decision? ||
+         (decisions.count == 0)
 
         next_event = static_next_event || next_event_in_the_list
 
       # if the event is the final boss event
       # and the boss is beaten
-      elsif requires_boss_beaten and CodeWars::DarkCobol.instance.is_beaten?
+      elsif requires_boss_beaten && CodeWars::DarkCobol.instance.is_beaten?
         next_event = static_next_event
 
       # if there's a current decision
@@ -90,14 +89,13 @@ module CodeWars
         next_event = current_decision.next_event
 
       # if the event requires all decisions to be made
-      elsif requires_all_decisions and
-        available_decisions.count == 0
+      elsif requires_all_decisions &&
+            (available_decisions.count == 0)
         next_event = static_next_event
       end
 
       next_event
     end
-
 
     # Returns wether or not the player input is considered valid
     # - @param [String] player_input
@@ -105,12 +103,12 @@ module CodeWars
     def is_player_input_valid?(player_input)
       player_input_is_valid = false
 
-      if player_input && player_input.size > 0
+      if player_input and !player_input.to_s.empty?
         if has_a_player_attribute_decision?
           player_input_is_valid = true
-        else player_input and (player_i = player_input.to_i)
-          player_input_is_valid = (player_i > 0 and
-            player_i <= available_decisions.count)
+        else player_input && (player_i = player_input.to_i)
+             player_input_is_valid = ((player_i > 0) &&
+               (player_i <= available_decisions.count))
         end
       end
 

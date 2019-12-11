@@ -1,4 +1,4 @@
-require "singleton"
+require 'singleton'
 module CodeWars
   ##
   # This class represents the boss
@@ -19,9 +19,7 @@ module CodeWars
     # - @return [Integer] life_points
     def attack!(life_points_attack)
       self.life_points -= life_points_attack
-      if self.life_points < 0
-        self.life_points = 0
-      end
+      self.life_points = 0 if self.life_points < 0
       life_points
     end
   end

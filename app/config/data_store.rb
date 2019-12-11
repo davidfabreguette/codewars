@@ -12,7 +12,7 @@ module CodeWars
     attr_reader :data
 
     # Models seeded through YML files
-    SEEDED_MODELS = %w(Event Decision)
+    SEEDED_MODELS = %w[Event Decision].freeze
 
     def initialize
       seed
@@ -37,11 +37,10 @@ module CodeWars
       @data = {}
 
       SEEDED_MODELS.each do |model_name|
-
-        pluralized_model_name = model_name.underscore + "s"
+        pluralized_model_name = model_name.underscore + 's'
 
         # Load data as an array of objects
-        models_data = YAML.load(File.read("app/data/#{pluralized_model_name}.yml")).deep_symbolize_keys
+        models_data = YAML.safe_load(File.read("app/data/#{pluralized_model_name}.yml")).deep_symbolize_keys
 
         # Constantize model klass
         model_klass = Class.const_get("CodeWars::#{model_name}")
@@ -50,7 +49,7 @@ module CodeWars
         models_data.each_with_index do |model_data, i|
           model = model_klass.new
 
-          model.load_attributes(model_data||{})
+          model.load_attributes(model_data || {})
 
           model.indexed_at = i
 

@@ -5,25 +5,25 @@ RSpec.describe 'CodeWarsModel' do
     end
   end
 
-  describe "#load_attributes" do
-    context "when attributes are provided as a hash" do
-      it "loads data into instance attributes" do
+  describe '#load_attributes' do
+    context 'when attributes are provided as a hash' do
+      it 'loads data into instance attributes' do
         instance = CodeWars::CodeWarsModel.new
-        instance.load_attributes({id: 1234})
+        instance.load_attributes(id: 1234)
         expect(instance.id).to eq(1234)
       end
     end
   end
 
-  describe "#data_store_name" do
-    context "As a CodeWarsModel" do
+  describe '#data_store_name' do
+    context 'As a CodeWarsModel' do
       it "returns 'code_wars_models'" do
         expect(CodeWars::CodeWarsModel.new.data_store_name).to eq(:code_wars_models)
       end
     end
   end
 
-  describe "#custom_label" do
+  describe '#custom_label' do
     # This is tested with Event and Decision Models
   end
 end

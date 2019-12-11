@@ -30,9 +30,9 @@ module CodeWars
     # - @return [Player]
     def update_player(player_input)
       if CodeWars::Player.instance.respond_to? current_player_input_attribute
-        CodeWars::Player.instance.update({
+        CodeWars::Player.instance.update(
           current_player_input_attribute => player_input
-        })
+        )
       end
     end
 
@@ -40,16 +40,15 @@ module CodeWars
     def next_event
       if next_event_slug
         case next_event_slug.class.to_s
-        when "String"
+        when 'String'
           CodeWars::DataStore.instance.events
-            .select{|e| e.slug == self.next_event_slug}.first
-        when "Array"
+                             .select { |e| e.slug == next_event_slug }.first
+        when 'Array'
           sample_index = rand(next_event_slug.size)
           CodeWars::DataStore.instance.events
-            .select{|e| e.slug == next_event_slug[sample_index]}.first
+                             .select { |e| e.slug == next_event_slug[sample_index] }.first
         end
       end
     end
-
   end
 end

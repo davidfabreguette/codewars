@@ -9,9 +9,12 @@ module CodeWars
     # been made by player
     attr_accessor :next_event_slug
 
-    # OPTIONAL This forces player to go through all the provided decisions
-    # before being able to go next
+    # OPTIONAL This forces the player to go through all the provided decisions
+    # before going next
     attr_accessor :requires_all_decisions
+
+    # OPTIONAL This forces the player to kill the boss before going next
+    attr_accessor :requires_boss_beaten
 
     # Search for any decisions attached to the event
     # @return [Decision]
@@ -74,7 +77,13 @@ module CodeWars
       # then go through the events list
       if has_a_player_attribute_decision? or
         decisions.count == 0
+
         next_event = static_next_event || next_event_in_the_list
+
+      # if the event is the final boss event
+      # and the boss is beaten
+      elsif requires_boss_beaten and CodeWars::DarkCobol.instance.is_beaten?
+        next_event = static_next_event
 
       # if there's a current decision
       elsif current_decision

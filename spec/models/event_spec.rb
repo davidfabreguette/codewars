@@ -115,6 +115,10 @@ RSpec.describe 'Event' do
       e1_event = CodeWars::DataStore.instance.events
         .select{|e| e.slug == "E1"}.first
     }
+    let(:e17_event) {
+      e17_event = CodeWars::DataStore.instance.events
+        .select{|e| e.slug == "E17"}.first
+    }
     context "As a E0 event" do
       context "that has a decision (D0) that has a player decision attribute" do
         it "returns E1 event (next event on the list)" do
@@ -128,14 +132,14 @@ RSpec.describe 'Event' do
     context "As a E1 event" do
       context "that has a decision (D1, D2, D3) and requires all decisions" do
         context "and only D1 decision is being made" do
-          it "returns D1 next event E2 (as it's the latest made decision)" do
-            expect(e1_event.resolve_next_event(d1_decision).slug).to eq("E2")
+          it "returns D1 next event E3 (as it's the latest made decision)" do
+            expect(e1_event.resolve_next_event(d1_decision).slug).to eq("E3")
           end
         end
         context "and D1 decision has been made, and D2 decisions is being made" do
-          it "returns D2 next event E3 (as it's the latest made decision)" do
+          it "returns D2 next event E2 (as it's the latest made decision)" do
             d1_decision_made
-            expect(e1_event.resolve_next_event(d2_decision).slug).to eq("E3")
+            expect(e1_event.resolve_next_event(d2_decision).slug).to eq("E2")
           end
         end
         context "and D1 and D2 decisions have been made, and D3 decision is being made" do
@@ -152,6 +156,14 @@ RSpec.describe 'Event' do
             d3_decision_made
             expect(e1_event.resolve_next_event.slug).to eq("E5")
           end
+        end
+      end
+    end
+    context "As a E17 boss event" do
+      context "If the boss is beaten" do
+        it "returns E21 event" do
+          CodeWars::DarkCobol.instance.life_points = 0
+          expect(e17_event.resolve_next_event.slug).to eq("E21")
         end
       end
     end

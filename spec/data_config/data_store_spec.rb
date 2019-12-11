@@ -1,7 +1,6 @@
 RSpec.describe 'DataStore' do
   let(:e0_event) do
-    e0_event = CodeWars::DataStore.instance.events
-                                  .select { |e| e.slug == 'E0' }.first
+    CodeWars::DataStore.instance.events.select { |e| e.slug == 'E0' }.first
   end
 
   context 'during initialization' do

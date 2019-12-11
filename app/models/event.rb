@@ -1,4 +1,6 @@
 module CodeWars
+  ## This is the game events model
+  # It is in charge of the different events taking place
   class Event < CodeWarsModel
     attr_accessor :label
 
@@ -58,10 +60,10 @@ module CodeWars
     # based on #next_event_slug attribute
     # - @return [Event]
     def static_next_event
-      if next_event_slug && !next_event_slug.empty?
-        CodeWars::DataStore.instance.data[:events]
-                           .select { |e| e.slug == next_event_slug }.first
-      end
+      return unless next_event_slug && !next_event_slug.empty?
+
+      CodeWars::DataStore.instance.data[:events]
+                         .select { |e| e.slug == next_event_slug }.first
     end
 
     # This methods is in charge of resolving next event to display based on
@@ -74,14 +76,13 @@ module CodeWars
       # if no decisions is attached
       # or if this is player_attribute decision related event
       # then go through the events list
-      if has_a_player_attribute_decision? ||
-         (decisions.count == 0)
+      if has_a_player_attribute_decision? || decisions.count.zero?
 
         next_event = static_next_event || next_event_in_the_list
 
       # if the event is the final boss event
       # and the boss is beaten
-      elsif requires_boss_beaten && CodeWars::DarkCobol.instance.is_beaten?
+      elsif requires_boss_beaten && CodeWars::DarkCobol.instance.beaten?
         next_event = static_next_event
 
       # if there's a current decision
@@ -89,8 +90,7 @@ module CodeWars
         next_event = current_decision.next_event
 
       # if the event requires all decisions to be made
-      elsif requires_all_decisions &&
-            (available_decisions.count == 0)
+      elsif requires_all_decisions && available_decisions.count.zero?
         next_event = static_next_event
       end
 
@@ -100,15 +100,15 @@ module CodeWars
     # Returns wether or not the player input is considered valid
     # - @param [String] player_input
     # - @return [Boolean] Wether or not the input is a valid one
-    def is_player_input_valid?(player_input)
+    def player_input_valid?(player_input)
       player_input_is_valid = false
 
-      if player_input and !player_input.to_s.empty?
+      if player_input && !player_input.to_s.empty?
         if has_a_player_attribute_decision?
           player_input_is_valid = true
-        else player_input && (player_i = player_input.to_i)
-             player_input_is_valid = ((player_i > 0) &&
-               (player_i <= available_decisions.count))
+        elsif player_input && (player_i = player_input.to_i)
+          player_input_is_valid = (player_i.positive? &&
+            (player_i <= available_decisions.count))
         end
       end
 

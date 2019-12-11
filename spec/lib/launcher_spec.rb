@@ -1,21 +1,18 @@
 require 'readline'
 RSpec.describe 'Launcher' do
   let(:e0_event) do
-    e0_event = CodeWars::DataStore.instance.events
-                                  .select { |e| e.slug == 'E0' }.first
+    CodeWars::DataStore.instance.events.select { |e| e.slug == 'E0' }.first
   end
   let(:e1_event) do
-    e1_event = CodeWars::DataStore.instance.events
-                                  .select { |e| e.slug == 'E1' }.first
+    CodeWars::DataStore.instance.events.select { |e| e.slug == 'E1' }.first
   end
   let(:e17_event) do
-    e17_event = CodeWars::DataStore.instance.events
-                                   .select { |e| e.slug == 'E17' }.first
+    CodeWars::DataStore.instance.events.select { |e| e.slug == 'E17' }.first
   end
   describe '#initialize' do
     it 'launches welcome part !' do
       allow(Readline).to receive(:readline).and_return('David')
-      event = CodeWars::DataStore.instance.events.first
+      CodeWars::DataStore.instance.events.first
       expect do
         CodeWars::Launcher.instance
       end

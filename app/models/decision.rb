@@ -29,25 +29,26 @@ module CodeWars
     # - @param [String] player_input
     # - @return [Player]
     def update_player(player_input)
-      if CodeWars::Player.instance.respond_to? current_player_input_attribute
-        CodeWars::Player.instance.update(
-          current_player_input_attribute => player_input
-        )
-      end
+      attr = current_player_input_attribute
+      return unless CodeWars::Player.instance.respond_to? attr
+
+      CodeWars::Player.instance.update(
+        current_player_input_attribute => player_input
+      )
     end
 
     # - @return [Event] next event saved in store
     def next_event
-      if next_event_slug
-        case next_event_slug.class.to_s
-        when 'String'
-          CodeWars::DataStore.instance.events
-                             .select { |e| e.slug == next_event_slug }.first
-        when 'Array'
-          sample_index = rand(next_event_slug.size)
-          CodeWars::DataStore.instance.events
-                             .select { |e| e.slug == next_event_slug[sample_index] }.first
-        end
+      return unless next_event_slug
+
+      case next_event_slug.class.to_s
+      when 'String'
+        CodeWars::DataStore.instance.events
+                           .select { |e| e.slug == next_event_slug }.first
+      when 'Array'
+        sample_index = rand(next_event_slug.size)
+        CodeWars::DataStore.instance.events
+                           .select { |e| e.slug == next_event_slug[sample_index] }.first
       end
     end
   end

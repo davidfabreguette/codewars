@@ -1,19 +1,16 @@
 RSpec.describe 'Event' do
   before(:each) do
-    launcher = get_launcher_with_no_output
+    launcher_with_no_output
   end
 
   let(:e0_event) do
-    e0_event = CodeWars::DataStore.instance.events
-                                  .select { |e| e.slug == 'E0' }.first
+    CodeWars::DataStore.instance.events.select { |e| e.slug == 'E0' }.first
   end
   let(:e1_event) do
-    e1_event = CodeWars::DataStore.instance.events
-                                  .select { |e| e.slug == 'E1' }.first
+    CodeWars::DataStore.instance.events.select { |e| e.slug == 'E1' }.first
   end
   let(:e03_event) do
-    e3_event = CodeWars::DataStore.instance.events
-                                  .select { |e| e.slug == 'E03' }.first
+    CodeWars::DataStore.instance.events.select { |e| e.slug == 'E03' }.first
   end
   let(:d0_decision) do
     CodeWars::DataStore.instance.decisions
@@ -31,6 +28,11 @@ RSpec.describe 'Event' do
     CodeWars::DataStore.instance.decisions
                        .select { |e| e.slug == 'D3' }.first
   end
+
+  let(:e17_event) do
+    CodeWars::DataStore.instance.events.select { |e| e.slug == 'E17' }.first
+  end
+
   let(:d0_decision_made) do
     d0_decision.made_at = Time.now
     d0_decision
@@ -107,18 +109,6 @@ RSpec.describe 'Event' do
   end
 
   describe '#resolve_next_event' do
-    let(:e0_event) do
-      e0_event = CodeWars::DataStore.instance.events
-                                    .select { |e| e.slug == 'E0' }.first
-    end
-    let(:e1_event) do
-      e1_event = CodeWars::DataStore.instance.events
-                                    .select { |e| e.slug == 'E1' }.first
-    end
-    let(:e17_event) do
-      e17_event = CodeWars::DataStore.instance.events
-                                     .select { |e| e.slug == 'E17' }.first
-    end
     context 'As a E0 event' do
       context 'that has a decision (D0) that has a player decision attribute' do
         it 'returns E1 event (next event on the list)' do
@@ -183,16 +173,16 @@ RSpec.describe 'Event' do
     end
   end
 
-  describe '#is_player_input_valid?' do
+  describe '#player_input_valid?' do
     context 'as a E0 event (that has a player attribute)' do
       it "marks 'David' as a valid input" do
-        expect(e0_event.is_player_input_valid?('David'))
+        expect(e0_event.player_input_valid?('David'))
           .to eq(true)
       end
       it "marks '' and nil as an valid input" do
         invalid_values = ['', nil]
         invalid_values.each do |invalid_value|
-          expect(e0_event.is_player_input_valid?(invalid_value))
+          expect(e0_event.player_input_valid?(invalid_value))
             .to eq(false)
         end
       end
@@ -201,7 +191,7 @@ RSpec.describe 'Event' do
       it "marks 'David', nil, or any number higher than 3 as an invalid input" do
         invalid_values = ['David', nil, 4, 10]
         invalid_values.each do |invalid_value|
-          expect(e1_event.is_player_input_valid?(invalid_value))
+          expect(e1_event.player_input_valid?(invalid_value))
             .to eq(false)
         end
       end

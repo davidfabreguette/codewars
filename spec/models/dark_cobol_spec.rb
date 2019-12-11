@@ -5,17 +5,17 @@ RSpec.describe 'Player' do
     end
   end
 
-  describe '#is_beaten?' do
+  describe '#beaten?' do
     context 'when #life_points = 0' do
       it 'returns true' do
         CodeWars::DarkCobol.instance.life_points = 0
-        expect(CodeWars::DarkCobol.instance.is_beaten?).to eq(true)
+        expect(CodeWars::DarkCobol.instance.beaten?).to eq(true)
       end
     end
     context 'when #life_points > 0' do
       it 'returns true' do
         CodeWars::DarkCobol.instance.life_points = 13
-        expect(CodeWars::DarkCobol.instance.is_beaten?).to eq(false)
+        expect(CodeWars::DarkCobol.instance.beaten?).to eq(false)
       end
     end
   end

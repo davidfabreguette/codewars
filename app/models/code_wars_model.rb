@@ -39,9 +39,9 @@ module CodeWars
     # based on meta field "#me#"
     # - @return [String]
     def custom_label
-      if respond_to?(:label) && label
-        label.gsub('#ME#', CodeWars::Player.instance.name || '')
-      end
+      return unless respond_to?(:label) && label
+
+      label.gsub('#ME#', CodeWars::Player.instance.name || '')
     end
   end
 end

@@ -1,5 +1,5 @@
 module LauncherHelpers
-  def get_launcher_with_no_output
+  def launcher_with_no_output
     launcher = nil
     # Disable console outputs temporarily
     RSpec::Mocks.with_temporary_scope do

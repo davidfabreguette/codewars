@@ -39,8 +39,10 @@ module CodeWars
       SEEDED_MODELS.each do |model_name|
         pluralized_model_name = model_name.underscore + 's'
 
+        filename = "app/data/#{pluralized_model_name}.yml"
+
         # Load data as an array of objects
-        models_data = YAML.safe_load(File.read("app/data/#{pluralized_model_name}.yml")).deep_symbolize_keys
+        models_data = YAML.safe_load(File.read(filename)).deep_symbolize_keys
 
         # Constantize model klass
         model_klass = Class.const_get("CodeWars::#{model_name}")

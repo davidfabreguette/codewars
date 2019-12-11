@@ -56,7 +56,7 @@ module CodeWars
       # all decisions have already been chosen !
       unless event.available_decisions.count == 0 and
         event.requires_all_decisions
-
+        puts ".".colorize(:red)
         puts event.custom_label.colorize(:yellow)
       end
 
@@ -74,7 +74,17 @@ module CodeWars
         return
       end
 
+      if event.requires_boss_beaten and
+        selected_decision.life_points and selected_decision.life_points.to_i > 0
+
+        CodeWars::DarkCobol.instance.attack!(selected_decision.life_points)
+        puts "> Dark Cobol life status : (#{CodeWars::DarkCobol.instance.life_points}/20)"
+      end
+
       if next_event = event.resolve_next_event(selected_decision)
+        if event.requires_boss_beaten
+          selected_decision = nil # we prevent sending decision back in to prevent it from being "made"
+        end
         launch(next_event, selected_decision)
       else
         puts end_game_label.colorize(:yellow)

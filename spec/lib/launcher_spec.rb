@@ -8,6 +8,10 @@ RSpec.describe "Launcher" do
     e1_event = CodeWars::DataStore.instance.events
       .select{|e| e.slug == "E1"}.first
   }
+  let(:e17_event) {
+    e17_event = CodeWars::DataStore.instance.events
+      .select{|e| e.slug == "E17"}.first
+  }
   describe "#initialize" do
     it "launches welcome part !" do
       allow(Readline).to receive(:readline).and_return("David")
@@ -228,5 +232,46 @@ RSpec.describe "Launcher" do
         CodeWars::Launcher.instance.launch(e0_event)
       end.to output(/#{e1_event.label}/).to_stdout
     end
+
+    context "in boss fight mode" do
+      context "when event requires_boss_beaten" do
+        context "and chosen decision has an attack set" do
+          it "attacks the boss with the selected dession attack" do
+            disable_puts_and_prints
+            d13_decision = e17_event.available_decisions
+              .select{|d| d.slug == "D13"}.first
+            allow(CodeWars::Launcher.instance)
+              .to receive(:ask_player_to_make_decision)
+              .and_return([d13_decision, nil])
+            expect(CodeWars::DarkCobol.instance)
+              .to receive(:attack!)
+              .with(5)
+            CodeWars::Launcher.instance.launch(e17_event)
+          end
+          it "shows the boss life status" do
+            d13_decision = e17_event.available_decisions
+              .select{|d| d.slug == "D13"}.first
+            allow(CodeWars::Launcher.instance)
+              .to receive(:ask_player_to_make_decision)
+              .and_return([d13_decision, nil])
+            expected_output= "> Dark Cobol life status : (15/20)"
+            regex = Regexp.new(Regexp.escape(expected_output))
+            expect do
+              CodeWars::Launcher.instance.launch(e17_event)
+            end.to output(regex).to_stdout
+          end
+        end
+      end
+      it "makes sure the selected decision is not getting made by next recursive cycle" do
+        disable_puts_and_prints
+        d13_decision = e17_event.available_decisions
+          .select{|d| d.slug == "D13"}.first
+        allow(CodeWars::Launcher.instance)
+          .to receive(:ask_player_to_make_decision)
+          .and_return([d13_decision, nil])
+        CodeWars::Launcher.instance.launch(e17_event)
+        expect(d13_decision.made_at).to eq(nil)
+      end
+   end
   end
 end

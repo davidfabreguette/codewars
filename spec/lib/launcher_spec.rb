@@ -234,6 +234,10 @@ RSpec.describe "Launcher" do
     end
 
     context "in boss fight mode" do
+      after(:all) do
+        # As it's an instance, make sure life points get back to original state
+        CodeWars::DarkCobol.instance.life_points = 20
+      end
       context "when event requires_boss_beaten" do
         context "and chosen decision has an attack set" do
           it "attacks the boss with the selected dession attack" do
@@ -249,6 +253,7 @@ RSpec.describe "Launcher" do
             CodeWars::Launcher.instance.launch(e17_event)
           end
           it "shows the boss life status" do
+            CodeWars::DarkCobol.instance.life_points = 20
             d13_decision = e17_event.available_decisions
               .select{|d| d.slug == "D13"}.first
             allow(CodeWars::Launcher.instance)
@@ -264,6 +269,7 @@ RSpec.describe "Launcher" do
       end
       it "makes sure the selected decision is not getting made by next recursive cycle" do
         disable_puts_and_prints
+        CodeWars::DarkCobol.instance.life_points = 20
         d13_decision = e17_event.available_decisions
           .select{|d| d.slug == "D13"}.first
         allow(CodeWars::Launcher.instance)

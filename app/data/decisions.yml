@@ -1,3 +1,4 @@
+#encoding: utf-8
 # First player decision : input his name !
 - slug: D0
   decided_event_slug: E0

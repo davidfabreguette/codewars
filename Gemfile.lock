@@ -8,10 +8,10 @@ GEM
     parallel (1.19.1)
     parser (2.6.5.0)
       ast (~> 2.4.0)
-    psych (4.0.4)
+    psych (5.1.2)
       stringio
     rainbow (3.0.0)
-    rdoc (6.4.0)
+    rdoc (6.4.1.1)
       psych (>= 4.0.0)
     require_all (3.0.0)
     rspec (3.9.0)
@@ -35,7 +35,7 @@ GEM
       ruby-progressbar (~> 1.7)
       unicode-display_width (>= 1.4.0, < 1.7)
     ruby-progressbar (1.10.1)
-    stringio (3.0.2)
+    stringio (3.1.0)
     unicode-display_width (1.6.0)
 
 PLATFORMS

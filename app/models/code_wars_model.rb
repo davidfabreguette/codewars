@@ -36,7 +36,7 @@ module CodeWars
 
     # FIXME : Move this to an included shared "conern" class !
     # Make any "label field" customized with Player's name
-    # based on meta field "#me#"
+    # based on meta field "#me#" --
     # - @return [String]
     def custom_label
       return unless respond_to?(:label) && label
